@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1190" height="644" viewBox="0 0 1190 644" font-family="Arial, sans-serif">
+<rect width="1190" height="644" fill="#0f1626"/>
+<text x="20" y="30" fill="#e8e2d4" font-size="18" font-weight="bold">Уровень 1 — профиль высот по маршруту (вертикаль ×2.4)</text>
+<text x="20" y="52" fill="#8a93a8" font-size="12">Y = 0 — мостовая у начала улицы (X 6), улица уходит вниз с уклоном 8 %. Подписи — высота опоры в метрах.</text>
+<line x1="60" y1="548" x2="1160" y2="548" stroke="#1f2a40"/>
+<text x="54" y="552" fill="#8a93a8" font-size="10" text-anchor="end">-9</text>
+<line x1="60" y1="522" x2="1160" y2="522" stroke="#1f2a40"/>
+<text x="54" y="526" fill="#8a93a8" font-size="10" text-anchor="end">-8</text>
+<line x1="60" y1="496" x2="1160" y2="496" stroke="#1f2a40"/>
+<text x="54" y="500" fill="#8a93a8" font-size="10" text-anchor="end">-7</text>
+<line x1="60" y1="470" x2="1160" y2="470" stroke="#1f2a40"/>
+<text x="54" y="474" fill="#8a93a8" font-size="10" text-anchor="end">-6</text>
+<line x1="60" y1="444" x2="1160" y2="444" stroke="#1f2a40"/>
+<text x="54" y="448" fill="#8a93a8" font-size="10" text-anchor="end">-5</text>
+<line x1="60" y1="418" x2="1160" y2="418" stroke="#1f2a40"/>
+<text x="54" y="422" fill="#8a93a8" font-size="10" text-anchor="end">-4</text>
+<line x1="60" y1="392" x2="1160" y2="392" stroke="#1f2a40"/>
+<text x="54" y="396" fill="#8a93a8" font-size="10" text-anchor="end">-3</text>
+<line x1="60" y1="366" x2="1160" y2="366" stroke="#1f2a40"/>
+<text x="54" y="370" fill="#8a93a8" font-size="10" text-anchor="end">-2</text>
+<line x1="60" y1="340" x2="1160" y2="340" stroke="#1f2a40"/>
+<text x="54" y="344" fill="#8a93a8" font-size="10" text-anchor="end">-1</text>
+<line x1="60" y1="314" x2="1160" y2="314" stroke="#1f2a40"/>
+<text x="54" y="318" fill="#8a93a8" font-size="10" text-anchor="end">0</text>
+<line x1="60" y1="288" x2="1160" y2="288" stroke="#1f2a40"/>
+<text x="54" y="292" fill="#8a93a8" font-size="10" text-anchor="end">1</text>
+<line x1="60" y1="262" x2="1160" y2="262" stroke="#1f2a40"/>
+<text x="54" y="266" fill="#8a93a8" font-size="10" text-anchor="end">2</text>
+<line x1="60" y1="236" x2="1160" y2="236" stroke="#1f2a40"/>
+<text x="54" y="240" fill="#8a93a8" font-size="10" text-anchor="end">3</text>
+<line x1="60" y1="210" x2="1160" y2="210" stroke="#1f2a40"/>
+<text x="54" y="214" fill="#8a93a8" font-size="10" text-anchor="end">4</text>
+<line x1="60" y1="184" x2="1160" y2="184" stroke="#1f2a40"/>
+<text x="54" y="188" fill="#8a93a8" font-size="10" text-anchor="end">5</text>
+<line x1="60" y1="158" x2="1160" y2="158" stroke="#1f2a40"/>
+<text x="54" y="162" fill="#8a93a8" font-size="10" text-anchor="end">6</text>
+<line x1="60" y1="132" x2="1160" y2="132" stroke="#1f2a40"/>
+<text x="54" y="136" fill="#8a93a8" font-size="10" text-anchor="end">7</text>
+<line x1="60" y1="106" x2="1160" y2="106" stroke="#1f2a40"/>
+<text x="54" y="110" fill="#8a93a8" font-size="10" text-anchor="end">8</text>
+<line x1="60" y1="80" x2="1160" y2="80" stroke="#1f2a40"/>
+<text x="54" y="84" fill="#8a93a8" font-size="10" text-anchor="end">9</text>
+<text x="71" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">-5</text>
+<text x="126" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">0</text>
+<text x="181" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">5</text>
+<text x="236" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">10</text>
+<text x="291" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">15</text>
+<text x="346" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">20</text>
+<text x="401" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">25</text>
+<text x="456" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">30</text>
+<text x="511" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">35</text>
+<text x="566" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">40</text>
+<text x="621" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">45</text>
+<text x="676" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">50</text>
+<text x="731" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">55</text>
+<text x="786" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">60</text>
+<text x="841" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">65</text>
+<text x="896" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">70</text>
+<text x="951" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">75</text>
+<text x="1006" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">80</text>
+<text x="1061" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">85</text>
+<text x="1116" y="577.6" fill="#8a93a8" font-size="10" text-anchor="middle">90</text>
+<polyline points="192,314 896,447.12 984,524.6 1116,529.8" fill="none" stroke="#56628a" stroke-width="3"/>
+<text x="566" y="402.2" fill="#8a93a8" font-size="11" text-anchor="middle">мостовая (уклон 8 %)</text>
+<rect x="1116" y="537.6" width="44" height="36.4" fill="#16335c"/>
+<rect x="71" y="158.0" width="55" height="5" fill="#ffb15c"/>
+<text x="98.5" y="152.0" fill="#e8e2d4" font-size="10" text-anchor="middle"></text>
+<rect x="126" y="158.0" width="66" height="5" fill="#ffb15c"/>
+<text x="159.0" y="152.0" fill="#e8e2d4" font-size="10" text-anchor="middle">Z0–Z1 квартира, терраса 6.0</text>
+<rect x="198.6" y="139.8" width="9.900000000000004" height="5" fill="#c8c8c0"/>
+<text x="203.55" y="133.8" fill="#e8e2d4" font-size="10" text-anchor="middle"></text>
+<rect x="214" y="124.2" width="33" height="5" fill="#ffb15c"/>
+<text x="230.5" y="118.2" fill="#e8e2d4" font-size="10" text-anchor="middle"></text>
+<rect x="247" y="124.2" width="132" height="5" fill="#7a6a58"/>
+<text x="313.0" y="118.2" fill="#e8e2d4" font-size="10" text-anchor="middle">Z3 балкон, Z4 карниз 7.3 (ширина 0.35)</text>
+<rect x="296.5" y="108.6" width="9.899999999999984" height="5" fill="#c8c8c0"/>
+<text x="301.45" y="102.6" fill="#e8e2d4" font-size="10" text-anchor="middle"></text>
+<rect x="384.5" y="143.7" width="33.0" height="5" fill="#2f5f8f"/>
+<text x="401.0" y="137.7" fill="#e8e2d4" font-size="10" text-anchor="middle">Z5 маркиза</text>
+<rect x="417.5" y="173.6" width="33.0" height="5" fill="#ffb15c"/>
+<text x="434.0" y="167.6" fill="#e8e2d4" font-size="10" text-anchor="middle">5.4</text>
+<rect x="489" y="178.8" width="33" height="5" fill="#ffb15c"/>
+<text x="505.5" y="172.8" fill="#e8e2d4" font-size="10" text-anchor="middle">Z7 5.2</text>
+<rect x="522" y="194.4" width="66" height="5" fill="#8c7a66"/>
+<text x="555.0" y="188.4" fill="#e8e2d4" font-size="10" text-anchor="middle">R1 4.6</text>
+<rect x="599" y="230.79999999999998" width="66" height="5" fill="#b4553a"/>
+<text x="632.0" y="224.79999999999998" fill="#e8e2d4" font-size="10" text-anchor="middle">R2 3.2</text>
+<rect x="676" y="267.20000000000005" width="55" height="5" fill="#b4553a"/>
+<text x="703.5" y="261.20000000000005" fill="#e8e2d4" font-size="10" text-anchor="middle">R3 1.8</text>
+<rect x="731" y="314.0" width="16.5" height="5" fill="#3f6b3a"/>
+<text x="739.25" y="308.0" fill="#e8e2d4" font-size="10" text-anchor="middle">перг. 0.0</text>
+<rect x="747.5" y="355.59999999999997" width="8.799999999999969" height="5" fill="#2f5f8f"/>
+<text x="751.9" y="349.59999999999997" fill="#e8e2d4" font-size="10" text-anchor="middle">−1.6</text>
+<rect x="756.3" y="389.40000000000003" width="7.700000000000031" height="5" fill="#9a8a74"/>
+<text x="760.15" y="383.40000000000003" fill="#e8e2d4" font-size="10" text-anchor="middle">ящики −2.9</text>
+<rect x="984" y="529.8" width="132" height="5" fill="#c9b48a"/>
+<text x="1050.0" y="523.8" fill="#e8e2d4" font-size="10" text-anchor="middle">Z9 набережная −8.3</text>
+<rect x="187.6" y="146.3" width="4.4" height="11.700000000000001" fill="#7a6a58"/>
+<path d="M450.5,168.4 Q475.25,202.2 500,178.8" fill="none" stroke="#ffb15c" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="475.25" y="210.4" fill="#ffb15c" font-size="10" text-anchor="middle">Z6 гирлянда 6 м</text>
+<polyline points="93,158.0 187.6,158.0 192,146.3 203,139.8 219.5,124.2 247,124.2 296.5,124.2 300.9,108.6 306.4,124.2 379,124.2 390,135.9 417.5,152.8 428.5,173.6 450.5,168.4 475.25,186.6 500,178.8 522,178.8 533,194.4 588,194.4 604.5,230.79999999999998 665,230.79999999999998 681.5,267.20000000000005 731,267.20000000000005 737.6,314 747.5,314 753,355.59999999999997 757.4,389.40000000000003 764,422.16 896,447.12 984,524.6 1110.5,529.8" fill="none" stroke="#4fe3d0" stroke-width="2.5" stroke-linejoin="round"/>
+<text x="209.6" y="157.8" fill="#e8e2d4" font-size="10">Z2 кондиционер 6.7</text>
+<text x="93" y="134" fill="#4fe3d0" font-size="11" font-weight="bold" text-anchor="middle">СТАРТ</text>
+<text x="1110.5" y="511.79999999999995" fill="#4fe3d0" font-size="11" font-weight="bold" text-anchor="middle">ФИНАЛ</text>
+</svg>

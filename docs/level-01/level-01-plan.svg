@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1170" height="358" viewBox="0 0 1170 358" font-family="Arial, sans-serif">
+<rect width="1170" height="358" fill="#0f1626"/>
+<text x="20" y="30" fill="#e8e2d4" font-size="18" font-weight="bold">Уровень 1 «Лунная улица» — план сверху (1 клетка = 1 м)</text>
+<text x="20" y="52" fill="#8a93a8" font-size="12">X — вдоль улицы вниз к морю, Z — поперёк улицы. Бирюзовая линия — маршрут кота.</text>
+<line x1="51" y1="70" x2="51" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="51" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">-5</text>
+<line x1="106" y1="70" x2="106" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="106" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">0</text>
+<line x1="161" y1="70" x2="161" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="161" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">5</text>
+<line x1="216" y1="70" x2="216" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="216" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">10</text>
+<line x1="271" y1="70" x2="271" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="271" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">15</text>
+<line x1="326" y1="70" x2="326" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="326" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">20</text>
+<line x1="381" y1="70" x2="381" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="381" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">25</text>
+<line x1="436" y1="70" x2="436" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="436" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">30</text>
+<line x1="491" y1="70" x2="491" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="491" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">35</text>
+<line x1="546" y1="70" x2="546" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="546" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">40</text>
+<line x1="601" y1="70" x2="601" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="601" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">45</text>
+<line x1="656" y1="70" x2="656" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="656" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">50</text>
+<line x1="711" y1="70" x2="711" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="711" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">55</text>
+<line x1="766" y1="70" x2="766" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="766" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">60</text>
+<line x1="821" y1="70" x2="821" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="821" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">65</text>
+<line x1="876" y1="70" x2="876" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="876" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">70</text>
+<line x1="931" y1="70" x2="931" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="931" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">75</text>
+<line x1="986" y1="70" x2="986" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="986" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">80</text>
+<line x1="1041" y1="70" x2="1041" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="1041" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">85</text>
+<line x1="1096" y1="70" x2="1096" y2="268" stroke="#1f2a40" stroke-width="1"/>
+<text x="1096" y="282" fill="#8a93a8" font-size="10" text-anchor="middle">90</text>
+<rect x="40" y="70" width="704" height="66" fill="#3a2f2a" fill-opacity="1"/>
+<text x="392.0" y="107.0" fill="#8a93a8" font-size="12" text-anchor="middle">Левый дом (фасад Z=0)</text>
+<rect x="744" y="70" width="220" height="66" fill="#3a2f2a" fill-opacity="0.7"/>
+<rect x="172" y="136" width="792" height="57.2" fill="#2b3550" fill-opacity="1"/>
+<rect x="469" y="193.2" width="275" height="74.8" fill="#3a2f2a" fill-opacity="0.9"/>
+<rect x="964" y="70" width="176" height="198" fill="#c9b48a" fill-opacity="0.25"/>
+<text x="1052.0" y="173.0" fill="#e8e2d4" font-size="12" text-anchor="middle">Набережная</text>
+<rect x="1096" y="70" width="44" height="198" fill="#16335c" fill-opacity="1"/>
+<rect x="106" y="136" width="66" height="27.5" fill="#5c4636" fill-opacity="1" stroke="#ffb15c" stroke-width="1.5"/>
+<text x="139.0" y="153.75" fill="#e8e2d4" font-size="10" text-anchor="middle">Z1 Терраса</text>
+<rect x="51" y="81" width="55" height="55" fill="#4a3524" fill-opacity="1" stroke="#ffb15c" stroke-width="1.5"/>
+<text x="78.5" y="77" fill="#e8e2d4" font-size="10" text-anchor="middle">Z0 Квартира</text>
+<rect x="111.5" y="132.7" width="22.0" height="3.3" fill="#ffb15c" fill-opacity="1"/>
+<rect x="178.6" y="136" width="9.900000000000004" height="6.6" fill="#c8c8c0" fill-opacity="1"/>
+<rect x="194" y="136" width="33" height="12.100000000000001" fill="#6b5040" fill-opacity="1" stroke="#ffb15c" stroke-width="1.5"/>
+<text x="210.5" y="146.05" fill="#e8e2d4" font-size="10" text-anchor="middle">Z3</text>
+<rect x="227" y="136" width="132" height="3.8499999999999996" fill="#7a6a58" fill-opacity="1"/>
+<rect x="249.0" y="136" width="11.0" height="6.050000000000001" fill="#9a8a74" fill-opacity="1"/>
+<rect x="309.5" y="136" width="11.0" height="6.050000000000001" fill="#9a8a74" fill-opacity="1"/>
+<rect x="342.5" y="136" width="11.0" height="6.050000000000001" fill="#9a8a74" fill-opacity="1"/>
+<rect x="276.5" y="136" width="9.899999999999984" height="6.6" fill="#c8c8c0" fill-opacity="1"/>
+<rect x="364.5" y="136" width="33.0" height="17.6" fill="#2f5f8f" fill-opacity="1" stroke="#dfe8f0" stroke-width="1.5"/>
+<text x="381.0" y="148.8" fill="#e8e2d4" font-size="10" text-anchor="middle">Z5</text>
+<rect x="397.5" y="136" width="33.0" height="13.2" fill="#6b5040" fill-opacity="1" stroke="#ffb15c" stroke-width="1.5"/>
+<rect x="469" y="193.2" width="33" height="13.200000000000003" fill="#6b5040" fill-opacity="1" stroke="#ffb15c" stroke-width="1.5"/>
+<rect x="502" y="193.2" width="66" height="63.8" fill="#8c7a66" fill-opacity="1"/>
+<text x="535.0" y="229.1" fill="#e8e2d4" font-size="9" text-anchor="middle">R1 терраса</text>
+<rect x="579" y="193.2" width="66" height="63.8" fill="#b4553a" fill-opacity="1"/>
+<text x="612.0" y="229.1" fill="#e8e2d4" font-size="9" text-anchor="middle">R2 черепица</text>
+<rect x="656" y="193.2" width="55" height="63.8" fill="#b4553a" fill-opacity="0.8"/>
+<text x="683.5" y="229.1" fill="#e8e2d4" font-size="9" text-anchor="middle">R3</text>
+<rect x="711" y="193.2" width="33" height="30.799999999999997" fill="#3f6b3a" fill-opacity="1"/>
+<text x="727.5" y="212.6" fill="#e8e2d4" font-size="9" text-anchor="middle">Z8</text>
+<rect x="876" y="136" width="88" height="57.2" fill="#3b4766" fill-opacity="1"/>
+<text x="920.0" y="168.6" fill="#e8e2d4" font-size="9" text-anchor="middle">лестница</text>
+<circle cx="216" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="315" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="414" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="513" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="612" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="711" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="810" cy="189.9" r="4" fill="#ffb15c"/>
+<circle cx="909" cy="189.9" r="4" fill="#ffb15c"/>
+<line x1="430.5" y1="149.2" x2="480" y2="193.2" stroke="#ffb15c" stroke-width="2" stroke-dasharray="3 3"/>
+<polyline points="84,108.5 114.8,149.2 166.5,144.8 183,139.3 210.5,142.6 232.5,137.98 280.9,139.3 359,137.98 381,145.9 414,142.6 430.5,149.2 480,193.2 491,199.8 535,224 612,224 678,224 722,207.5 744,180 810,164.6 920,164.6 1052,164.6 1090.5,164.6" fill="none" stroke="#4fe3d0" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="84" cy="108.5" r="6" fill="#4fe3d0"/><text x="84" y="128.5" fill="#4fe3d0" font-size="11" font-weight="bold" text-anchor="middle">СТАРТ</text>
+<circle cx="1090.5" cy="164.6" r="6" fill="#4fe3d0"/><text x="1090.5" y="184.6" fill="#4fe3d0" font-size="11" font-weight="bold" text-anchor="middle">ФИНАЛ</text>
+<circle cx="183" cy="139.3" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="210.5" cy="142.6" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="280.9" cy="139.3" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="381" cy="145.9" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="430.5" cy="149.2" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="480" cy="193.2" r="3.5" fill="#7ff7ff" stroke="#0f1626"/>
+<circle cx="216" cy="145.9" r="5" fill="#9aa3ad" stroke="#e8e2d4"/>
+<rect x="20" y="298" width="14" height="12" fill="#4fe3d0"/><text x="40" y="308" fill="#e8e2d4" font-size="12">маршрут</text>
+<rect x="109" y="298" width="14" height="12" fill="#7ff7ff"/><text x="129" y="308" fill="#e8e2d4" font-size="12">лапка — точка прыжка</text>
+<rect x="289" y="298" width="14" height="12" fill="#ffb15c"/><text x="309" y="308" fill="#e8e2d4" font-size="12">фонарь / гирлянда</text>
+<rect x="448" y="298" width="14" height="12" fill="#9aa3ad"/><text x="468" y="308" fill="#e8e2d4" font-size="12">NPC «Барон» (серый кот)</text>
+<rect x="649" y="298" width="14" height="12" fill="#c8c8c0"/><text x="669" y="308" fill="#e8e2d4" font-size="12">кондиционер</text>
+<rect x="766" y="298" width="14" height="12" fill="#2f5f8f"/><text x="786" y="308" fill="#e8e2d4" font-size="12">маркиза</text>
+<text x="20" y="336" fill="#8a93a8" font-size="12">Z2 — кондиционер №1 (X 6.6), Z4 — карниз 0.35 м (X 11–23), Z6 — гирлянда через улицу (X 29.5→34), Z7 — крыши правого дома, Z9 — улица, лестница и набережная.</text>
+</svg>
