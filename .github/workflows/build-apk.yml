@@ -59,6 +59,8 @@ jobs:
           unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: Android
           buildMethod: Cats.EditorTools.AndroidBuilder.BuildBatch
+          versioning: None
+          allowDirtyBuild: true
           customParameters: ${{ (github.event_name == 'workflow_dispatch' && !inputs.bake) && '-catsSkipBake' || '' }}
 
       - uses: actions/upload-artifact@v4
