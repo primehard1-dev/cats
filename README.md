@@ -2,6 +2,12 @@
 
 Мобильная игра про кота для Android (Unity 6, URP, горизонтальный экран).
 
+## Готовый APK
+
+Каждое изменение в `CatsGame/` собирается на GitHub автоматически (Unity 6, свет запекается на сервере, ~40 минут):
+**Actions → Build APK →** последний зелёный запуск **→ Artifacts → CatsMoonStreet-apk**.
+Нужны секреты репозитория `UNITY_LICENSE` (весь текст `C:\ProgramData\Unity\Unity_lic.ulf`), `UNITY_EMAIL`, `UNITY_PASSWORD`.
+
 ## Состав репозитория
 
 - [`docs/unity-setup.md`](docs/unity-setup.md) — **с чего начать:** пошаговая установка Unity и запуск игры (в редакторе и на телефоне).
