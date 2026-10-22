@@ -22,7 +22,7 @@
 1. Скачайте **Unity Hub**: https://unity.com/download → установите → войдите
    (аккаунт Unity бесплатный; при первом входе Hub выдаст лицензию **Personal**).
 2. В Hub: **Installs** → **Install Editor** → вкладка **Official releases** →
-   **Unity 6 LTS** (версия 6000.x с пометкой LTS).
+   **Unity 6** (6000.0 LTS или новее, например 6000.6 — проект настроен на 6000.6.1f1).
 3. На шаге модулей отметьте:
    - ☑ **Android Build Support**
      - ☑ OpenJDK
