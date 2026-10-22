@@ -105,6 +105,9 @@ MATERIALS = [
     m("M_Streaks", shader="unlitTransparent", albedo="T_Streaks_A", color=(1, 1, 1), alpha=0.6),
     m("M_PawPrint", shader="unlitTransparent", albedo="T_PawPrint_A", color=(1, 1, 1), alpha=0.55),
     m("M_Pigeon", albedo="T_Pigeon_A", smoothness=0.25),
+    # planar puddle reflections (custom shader Cats/PuddleReflection; smoothness = strength)
+    m("M_PuddleTiles", shader="puddle", normal="T_TerraceTiles_N", mask="T_TerraceTiles_M", tiling=(0.5, 0.5), smoothness=0.95),
+    m("M_PuddleCobble", shader="puddle", normal="T_Cobble_N", mask="T_Cobble_M", tiling=(1 / 3, 1 / 3), smoothness=0.8),
 ]
 
 if __name__ == "__main__":

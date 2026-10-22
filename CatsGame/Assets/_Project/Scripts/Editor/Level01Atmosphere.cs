@@ -312,6 +312,7 @@ namespace Cats.EditorTools
             if (cam != null)
             {
                 var ps = Particles("Dust", cam.transform, cam.transform.position, "M_Dust", 40);
+                ps.gameObject.layer = ProjectSetup.Layer(ProjectSetup.FxLayer);
                 ps.transform.localPosition = new Vector3(0f, 0f, 3.5f);
                 var main = ps.main;
                 main.simulationSpace = ParticleSystemSimulationSpace.Local;
@@ -428,6 +429,7 @@ namespace Cats.EditorTools
                     a.minDistance = s.minDistance;
                     a.maxDistance = s.maxDistance;
                     a.dopplerLevel = 0f;
+                    go.AddComponent<Cats.AudioVolume>().category = Cats.AudioVolume.Category.Music;
                 }
 
             Transform bell = null;

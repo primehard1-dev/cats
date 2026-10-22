@@ -50,6 +50,49 @@ namespace UnityEngine.UI
         public float matchWidthOrHeight { get; set; }
     }
     public class GraphicRaycaster : BaseRaycaster { }
+    public class RawImage : MaskableGraphic { public Texture texture { get; set; } }
+    public abstract class Selectable : UIBehaviour
+    {
+        public Graphic targetGraphic { get; set; }
+        public ColorBlock colors { get; set; }
+        public bool interactable { get; set; }
+    }
+    public struct ColorBlock
+    {
+        public Color normalColor { get; set; }
+        public Color highlightedColor { get; set; }
+        public Color pressedColor { get; set; }
+        public Color selectedColor { get; set; }
+        public Color disabledColor { get; set; }
+        public float colorMultiplier { get; set; }
+        public float fadeDuration { get; set; }
+        public static ColorBlock defaultColorBlock => default;
+    }
+    public class Button : Selectable
+    {
+        public class ButtonClickedEvent : UnityEngine.Events.UnityEvent { }
+        public ButtonClickedEvent onClick { get; set; } = new ButtonClickedEvent();
+    }
+    public class Slider : Selectable
+    {
+        public enum Direction { LeftToRight, RightToLeft, BottomToTop, TopToBottom }
+        public class SliderEvent : UnityEngine.Events.UnityEvent<float> { }
+        public SliderEvent onValueChanged { get; set; } = new SliderEvent();
+        public float value { get; set; }
+        public float minValue { get; set; }
+        public float maxValue { get; set; }
+        public RectTransform fillRect { get; set; }
+        public RectTransform handleRect { get; set; }
+        public Direction direction { get; set; }
+    }
+    public class AspectRatioFitter : UIBehaviour
+    {
+        public enum AspectMode { None, WidthControlsHeight, HeightControlsWidth, FitInParent, EnvelopeParent }
+        public AspectMode aspectMode { get; set; }
+        public float aspectRatio { get; set; }
+    }
+    public class Shadow : UIBehaviour { public Color effectColor { get; set; } public Vector2 effectDistance { get; set; } }
+    public class Outline : Shadow { }
 }
 
 namespace UnityEngine.InputSystem.Controls
@@ -67,7 +110,7 @@ namespace UnityEngine.InputSystem
     public class Keyboard
     {
         public static Keyboard current => null;
-        public KeyControl mKey, wKey, aKey, sKey, dKey, upArrowKey, downArrowKey, leftArrowKey, rightArrowKey, leftShiftKey, spaceKey;
+        public KeyControl escapeKey, mKey, wKey, aKey, sKey, dKey, upArrowKey, downArrowKey, leftArrowKey, rightArrowKey, leftShiftKey, spaceKey;
     }
     public class Gamepad
     {
@@ -134,7 +177,7 @@ namespace UnityEngine.Rendering.Universal
         public UpscalingFilterSelection upscalingFilter { get; set; }
     }
     public enum AntialiasingMode { None, FastApproximateAntialiasing, SubpixelMorphologicalAntiAliasing, TemporalAntiAliasing }
-    public class UniversalAdditionalCameraData : MonoBehaviour { public bool renderPostProcessing { get; set; } public AntialiasingMode antialiasing { get; set; } }
+    public class UniversalAdditionalCameraData : MonoBehaviour { public bool renderPostProcessing { get; set; } public bool renderShadows { get; set; } public AntialiasingMode antialiasing { get; set; } }
     public static class CameraExtensions { public static UniversalAdditionalCameraData GetUniversalAdditionalCameraData(this Camera camera) => null; }
 }
 

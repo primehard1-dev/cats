@@ -59,13 +59,14 @@ namespace Cats
             Play(meows[Random.Range(0, meows.Length)], 0.9f, Random.Range(0.95f, 1.08f));
             if (_anim != null) _anim.PlayMeow();
             MeowListeners.Notify(_cat, transform.position);
+            SaveSystem.Data.meows++;
         }
 
         void Play(AudioClip clip, float volume, float pitch)
         {
             if (clip == null) return;
             _fx.pitch = pitch;
-            _fx.PlayOneShot(clip, volume);
+            _fx.PlayOneShot(clip, volume * CatsVolume.Sfx);
         }
 
         void Update()
@@ -99,7 +100,7 @@ namespace Cats
             }
 
             bool sitting = _anim != null && _anim.IsSitting;
-            float target = sitting && _anim.SitTime > 2.5f ? 0.45f : 0f;
+            float target = sitting && _anim.SitTime > 2.5f ? 0.45f * CatsVolume.Sfx : 0f;
             _purr.volume = Mathf.MoveTowards(_purr.volume, target, Time.deltaTime * 0.3f);
             if (_purr.volume > 0f && !_purr.isPlaying && purrLoop != null) _purr.Play();
             else if (_purr.volume <= 0f && _purr.isPlaying) _purr.Stop();

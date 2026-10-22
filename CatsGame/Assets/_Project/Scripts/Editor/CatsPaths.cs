@@ -12,5 +12,6 @@ namespace Cats.EditorTools
         public const string Settings = Root + "/Settings";
         public const string Scenes = Root + "/Scenes";
         public const string Level01Scene = Scenes + "/Level01_MoonStreet.unity";
+        public const string MainMenuScene = Scenes + "/MainMenu.unity";
     }
 }

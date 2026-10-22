@@ -64,8 +64,10 @@ namespace Cats
         public void AddLook(Vector2 delta)
         {
             if (delta.sqrMagnitude < 1e-6f) return;
-            _yaw += delta.x * lookSensitivity;
-            _pitch = Mathf.Clamp(_pitch - delta.y * lookSensitivity, minPitch, maxPitch);
+            var s = SaveSystem.Settings;
+            float k = lookSensitivity * Mathf.Max(0.1f, s.lookSensitivity);
+            _yaw += delta.x * k;
+            _pitch = Mathf.Clamp(_pitch - delta.y * k * (s.invertY ? -1f : 1f), minPitch, maxPitch);
             _lastLook = Time.time;
         }
 

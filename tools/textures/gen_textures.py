@@ -663,6 +663,20 @@ def ui(size=256):
     d.polygon([(c - 0.025 * S, c + 0.09 * S), (c + 0.025 * S, c + 0.09 * S), (c, c + 0.12 * S)], fill=40)
     finish(im, "UI_MeowButton.png")
 
+    # pause: ring + two bars
+    im = Image.new("L", (S, S), 0)
+    d = ImageDraw.Draw(im)
+    d.ellipse([8, 8, S - 8, S - 8], fill=40, outline=200, width=22)
+    for x in (0.38, 0.56):
+        d.rounded_rectangle([S * x, S * 0.3, S * (x + 0.08), S * 0.7], radius=S // 40, fill=230)
+    finish(im, "UI_Pause.png")
+
+    # left-side shade behind the main menu buttons (alpha falls off to the right)
+    gw, gh = 512, 64
+    xs = np.linspace(0, 1, gw)[None, :].repeat(gh, 0)
+    a = np.clip(1 - xs / 0.85, 0, 1) ** 1.6 * 0.85
+    save_rgba(p("UI_GradientLeft.png"), np.concatenate([np.zeros((gh, gw, 3)), a[..., None]], axis=-1))
+
 
 # ---------------------------------------------------------------- atmosphere / VFX
 def vfx(size=256, seed=19):

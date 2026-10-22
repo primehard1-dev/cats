@@ -54,15 +54,17 @@ namespace Cats
 
         void Update()
         {
+            float m = CatsVolume.Music;
             if (listener != null && _sea != null)
             {
                 float k = Mathf.InverseLerp(seaZ - 90f, seaZ, listener.position.z);
-                _sea.volume = Mathf.Lerp(0.22f, 0.75f, k * k);
-                _crickets.volume = Mathf.Lerp(0.24f, 0.12f, k);
+                _sea.volume = Mathf.Lerp(0.22f, 0.75f, k * k) * m;
+                _crickets.volume = Mathf.Lerp(0.24f, 0.12f, k) * m;
             }
+            if (_wind != null) _wind.volume = 0.18f * m;
             if (_bell != null && bell != null && Time.time >= _nextBell)
             {
-                _bell.PlayOneShot(bell, 1f);
+                _bell.PlayOneShot(bell, m);
                 if (_strokesLeft > 1) { _strokesLeft--; _nextBell = Time.time + 2.6f; }
                 else { _strokesLeft = 1; _nextBell = Time.time + Random.Range(bellInterval.x, bellInterval.y); }
             }

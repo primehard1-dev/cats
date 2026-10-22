@@ -67,6 +67,7 @@ namespace Cats.EditorTools
             string shaderName = d.shader switch
             {
                 "skybox" => "Skybox/Panoramic",
+                "puddle" => "Cats/PuddleReflection",
                 "unlitCutout" => "Universal Render Pipeline/Unlit",
                 "unlitTransparent" => "Universal Render Pipeline/Unlit",
                 "unlitAdditive" => "Universal Render Pipeline/Unlit",
@@ -84,7 +85,17 @@ namespace Cats.EditorTools
             if (created) mat = new Material(shader) { name = d.name };
             else mat.shader = shader;
 
-            if (d.shader == "skybox")
+            if (d.shader == "puddle")
+            {
+                mat.SetTexture("_MaskTex", Tex(d.mask));
+                mat.SetTextureScale("_MaskTex", d.tiling);
+                mat.SetTexture("_NormalTex", Tex(d.normal));
+                mat.SetTextureScale("_NormalTex", d.tiling);
+                mat.SetColor("_Tint", d.color);
+                mat.SetFloat("_Strength", d.smoothness);
+                mat.renderQueue = 2990;
+            }
+            else if (d.shader == "skybox")
             {
                 mat.SetTexture("_MainTex", Tex(d.albedo));
                 mat.SetFloat("_Mapping", 1f);

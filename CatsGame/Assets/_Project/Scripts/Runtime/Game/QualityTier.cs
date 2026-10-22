@@ -13,6 +13,9 @@ namespace Cats
             bool high = SystemInfo.systemMemorySize >= 6000 && SystemInfo.processorCount >= 8 &&
                         SystemInfo.graphicsMemorySize >= 1500;
             if (!Application.isMobilePlatform) high = true;
+            int choice = SaveSystem.Settings.quality;
+            if (choice == 1) high = false;
+            else if (choice == 2) high = true;
             IsHigh = high;
             int count = QualitySettings.names.Length;
             if (count > 0) QualitySettings.SetQualityLevel(high ? count - 1 : 0, true);

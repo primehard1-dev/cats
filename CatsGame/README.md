@@ -10,7 +10,8 @@ Unity 6 (6000.0 LTS или новее), Universal Render Pipeline, Android, го
 3. В меню **Cats**:
    - **0. Do everything (1-3)** — настраивает проект (Android, Linear, URP Low/High, слои),
      создаёт материалы и префабы, собирает сцену `Assets/_Project/Scenes/Level01_MoonStreet.unity`;
-   - **4. Bake lighting** — запекает свет (лайтмапы, пробы). На средней видеокарте 5–15 минут.
+   - **4. Bake lighting** — запекает свет (лайтмапы, пробы). На средней видеокарте 5–15 минут;
+   - **5. Open main menu** — открыть меню: игра стартует с него (Продолжить / Новая прогулка / Настройки).
 4. **Play.** В редакторе: WASD — идти (Shift — бег), пробел — прыжок, M — мяу, правая кнопка мыши — камера.
    На телефоне: джойстик слева, прыжок справа, «мяу» рядом с прыжком, свайп по экрану — камера.
 5. Сборка: **File → Build Profiles → Android → Build**.
@@ -46,6 +47,9 @@ Assets/_Project/
 | `GameManager` | затемнение на старте, чекпоинты, респаун, подсказки, финал. Игроки — списком, готово к кооперативу |
 | `NpcCat` | серый кот Барон на балконе: смотрит на игрока и рассказывает цель |
 | `Level01Builder` | собирает всю сцену из JSON |
+| `MenuBuilder`, `MainMenu` | главное меню: «живое фото» референса (видео-петля), кнопки, музыка, переход в уровень |
+| `SaveSystem`, `SettingsPanel` | сохранение на чекпоинтах (JSON в persistentDataPath), рекорды, громкость, качество, камера |
+| `PlanarReflection`, `PuddleSurface`, `Cats/PuddleReflection.shader` | зеркальные отражения в лужах (только «красиво»/High) |
 | `Level01Atmosphere` | ореолы, световые конусы, свет из окон, подтёки, облака, лунная дорожка, частицы, ветер, голуби, звук |
 | `CatAudio`, `AmbientAudio` | шаги, мяу, мурчание; море, сверчки, ветер, колокол |
 
@@ -58,6 +62,7 @@ python3 tools/textures/gen_textures.py          # текстуры (numpy, pillo
 python3 tools/level/materials.py                # materials.json
 python3 tools/level/level01_layout.py           # level01.json
 python3 tools/audio/gen_audio.py                # звуки (numpy)
+python  tools/menu/make_menu_video.py           # фон меню: оживлённый референс, menu_loop.mp4 (нужен ffmpeg)
 pip install bpy==5.2.2                          # Blender как Python-модуль (Python 3.13)
 python  tools/blender/make_models.py            # FBX-модели
 python  tools/blender/render_level.py out.png   # предварительный рендер стартового кадра в Cycles

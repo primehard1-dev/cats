@@ -59,7 +59,7 @@ namespace Cats
             if (away.sqrMagnitude < 0.01f) away = Random.insideUnitSphere;
             _flyDir = (away.normalized + Vector3.up * 0.7f + Random.insideUnitSphere * 0.3f).normalized;
             _flyTime = 0f;
-            if (flap != null) _audio.PlayOneShot(flap, 0.8f);
+            if (flap != null) _audio.PlayOneShot(flap, 0.8f * CatsVolume.Sfx);
         }
 
         void Update()
@@ -100,7 +100,7 @@ namespace Cats
             if (Time.time > _nextPeck) { _peck = 1f; _nextPeck = Time.time + Random.Range(1.5f, 5f); }
             _peck = Mathf.MoveTowards(_peck, 0f, dt * 3f);
             if (_body != null) _body.localRotation = Quaternion.Euler(Mathf.Sin(_peck * Mathf.PI) * 35f, 0f, 0f);
-            if (Time.time > _nextCoo && coo != null) { _audio.PlayOneShot(coo, 0.5f); _nextCoo = Time.time + Random.Range(8f, 20f); }
+            if (Time.time > _nextCoo && coo != null) { _audio.PlayOneShot(coo, 0.5f * CatsVolume.Sfx); _nextCoo = Time.time + Random.Range(8f, 20f); }
         }
 
         void SetVisible(bool v)

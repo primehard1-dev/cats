@@ -2,13 +2,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem.UI;
-#endif
 
 namespace Cats.EditorTools
 {
@@ -58,6 +54,7 @@ namespace Cats.EditorTools
             BuildBackground();
             BuildProbes();
             BuildGameplay();
+            BuildPuddles();
             var ui = BuildUI(out var input);
             var player = BuildPlayers(ui, input, out var cam);
             Level01Atmosphere.Build(L, _props, _background, _meshes, player, cam);
@@ -65,7 +62,7 @@ namespace Cats.EditorTools
             _meshes.Save();
             Lightmapping.lightingSettings = LightingSetup.GetOrCreate();
             EditorSceneManager.SaveScene(scene, CatsPaths.Level01Scene);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(CatsPaths.Level01Scene, true) };
+            CatsMenu.UpdateBuildScenes();
             Debug.Log("[Cats] Level 01 built. Next: Cats ▸ 4. Bake Lighting (takes a few minutes), then press Play.");
         }
 
@@ -392,6 +389,37 @@ namespace Cats.EditorTools
             lp.probePositions = L.lightProbes;
         }
 
+        // ------------------------------------------------------------------ puddle reflections
+        static void BuildPuddles()
+        {
+            var root = new GameObject("Puddles").transform;
+            root.SetParent(_geo, false);
+            // (min corner x, z), (max corner x, z), height, material — Unity coordinates
+            var areas = new (Vector2 a, Vector2 b, float y, string mat)[]
+            {
+                (new Vector2(0.02f, 0.05f), new Vector2(2.08f, 5.55f), 6.0f, "M_PuddleTiles"),
+                (new Vector2(4.35f, 36.05f), new Vector2(11.1f, 41.95f), 4.6f, "M_PuddleTiles"),
+                (new Vector2(5.25f, 54.05f), new Vector2(11.1f, 59.95f), -2.98f, "M_PuddleTiles"),
+                (new Vector2(-29.5f, 78.2f), new Vector2(39.5f, 91.3f), -8.3f, "M_PuddleCobble"),
+            };
+            int i = 0;
+            foreach (var p in areas)
+            {
+                var a = new Vector3(p.a.x, 0f, p.a.y);
+                var b = new Vector3(p.b.x, 0f, p.a.y);
+                var c = new Vector3(p.b.x, 0f, p.b.y);
+                var d = new Vector3(p.a.x, 0f, p.b.y);
+                Mf.Quad(a, b, c, d, Vector3.up, new Vector2(a.x, a.z), new Vector2(b.x, b.z), new Vector2(c.x, c.z), new Vector2(d.x, d.z));
+                var go = MeshObject("Puddle" + i++, root, _meshes.Add(Mf.ToMesh("Puddle", false)), MaterialLibrary.Get(p.mat), false, false);
+                go.transform.position = new Vector3(0f, p.y + 0.004f, 0f);
+                var r = go.GetComponent<MeshRenderer>();
+                r.receiveShadows = false;
+                r.lightProbeUsage = LightProbeUsage.Off;
+                r.reflectionProbeUsage = ReflectionProbeUsage.Off;
+                go.AddComponent<PuddleSurface>();
+            }
+        }
+
         // ------------------------------------------------------------------ gameplay
         static GameObject Trigger(string name, Vector3 pos, Vector3 size)
         {
@@ -460,74 +488,18 @@ namespace Cats.EditorTools
         }
 
         // ------------------------------------------------------------------ UI
-        static Font UIFont => Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        static Sprite Sprite(string name) => AssetDatabase.LoadAssetAtPath<Sprite>($"{CatsPaths.Textures}/{name}.png");
-
-        static RectTransform Rect(string name, Transform parent, Vector2 anchor, Vector2 pos, Vector2 size)
-        {
-            var go = new GameObject(name, typeof(RectTransform));
-            go.transform.SetParent(parent, false);
-            var rt = (RectTransform)go.transform;
-            rt.anchorMin = rt.anchorMax = anchor;
-            rt.pivot = new Vector2(0.5f, 0.5f);
-            rt.anchoredPosition = pos;
-            rt.sizeDelta = size;
-            return rt;
-        }
-
-        static RectTransform Stretch(string name, Transform parent)
-        {
-            var go = new GameObject(name, typeof(RectTransform));
-            go.transform.SetParent(parent, false);
-            var rt = (RectTransform)go.transform;
-            rt.anchorMin = Vector2.zero;
-            rt.anchorMax = Vector2.one;
-            rt.offsetMin = rt.offsetMax = Vector2.zero;
-            return rt;
-        }
-
-        static Image Img(RectTransform rt, string sprite, Color color, bool raycast)
-        {
-            var img = rt.gameObject.AddComponent<Image>();
-            img.sprite = sprite != null ? Sprite(sprite) : null;
-            img.color = color;
-            img.raycastTarget = raycast;
-            return img;
-        }
-
-        static Text Label(RectTransform rt, int size, TextAnchor align, Color color)
-        {
-            var t = rt.gameObject.AddComponent<Text>();
-            t.font = UIFont;
-            t.fontSize = size;
-            t.alignment = align;
-            t.color = color;
-            t.raycastTarget = false;
-            t.horizontalOverflow = HorizontalWrapMode.Wrap;
-            t.verticalOverflow = VerticalWrapMode.Overflow;
-            return t;
-        }
+        static RectTransform Rect(string n, Transform p, Vector2 a, Vector2 pos, Vector2 size) => UIFactory.Rect(n, p, a, pos, size);
+        static RectTransform Stretch(string n, Transform p) => UIFactory.Stretch(n, p);
+        static Image Img(RectTransform rt, string sprite, Color c, bool raycast) => UIFactory.Img(rt, sprite, c, raycast);
+        static Text Label(RectTransform rt, int size, TextAnchor a, Color c) => UIFactory.Label(rt, size, a, c);
 
         static GameUI BuildUI(out LocalCatInput input)
         {
-            var es = new GameObject("EventSystem");
-            es.AddComponent<EventSystem>();
-#if ENABLE_INPUT_SYSTEM
-            es.AddComponent<InputSystemUIInputModule>().AssignDefaultActions();
-#else
-            es.AddComponent<StandaloneInputModule>();
-#endif
-            var canvasGo = new GameObject("UI", typeof(RectTransform));
-            var canvas = canvasGo.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            var scaler = canvasGo.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 1f;
-            canvasGo.AddComponent<GraphicRaycaster>();
-            var root = canvasGo.transform;
-            var ui = canvasGo.AddComponent<GameUI>();
+            UIFactory.EventSystem();
+            var canvas = UIFactory.Canvas("UI");
+            var root = canvas.transform;
+            var ui = canvas.gameObject.AddComponent<GameUI>();
+            ui.tap = AssetDatabase.LoadAssetAtPath<AudioClip>(CatsPaths.Root + "/Audio/sfx_ui_tap.wav");
 
             var controls = Stretch("TouchControls", root);
             var look = Stretch("LookArea", controls);
@@ -564,23 +536,50 @@ namespace Cats.EditorTools
             ui.dialogueGroup = dlg.gameObject.AddComponent<CanvasGroup>();
             ui.dialogueGroup.blocksRaycasts = false;
             var dn = Rect("Name", dlg, new Vector2(0f, 1f), new Vector2(180, -32), new Vector2(320, 50));
-            ui.dialogueName = Label(dn, 34, TextAnchor.MiddleLeft, new Color(1f, 0.72f, 0.38f));
+            ui.dialogueName = UIFactory.Label(dn, 40, TextAnchor.MiddleLeft, new Color(1f, 0.72f, 0.38f), UIFactory.Title);
             var dt = Stretch("Line", dlg);
             dt.offsetMin = new Vector2(40, 16);
             dt.offsetMax = new Vector2(-40, -60);
             ui.dialogueText = Label(dt, 40, TextAnchor.UpperLeft, Color.white);
 
-            var fin = Rect("Finish", root, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100, 320));
-            Img(fin, "UI_Panel", new Color(0.02f, 0.03f, 0.08f, 0.75f), false);
-            ui.finishGroup = fin.gameObject.AddComponent<CanvasGroup>();
-            ui.finishGroup.blocksRaycasts = false;
-            ui.finishText = Label(Stretch("Text", fin), 58, TextAnchor.MiddleCenter, new Color(1f, 0.9f, 0.7f));
+            var saved = Rect("Saved", root, new Vector2(1f, 1f), new Vector2(-330, -70), new Vector2(300, 70));
+            Img(saved, "UI_Panel", new Color(0.02f, 0.03f, 0.08f, 0.6f), false);
+            ui.savedGroup = saved.gameObject.AddComponent<CanvasGroup>();
+            ui.savedGroup.blocksRaycasts = false;
+            var savedText = Label(Stretch("Text", saved), 32, TextAnchor.MiddleCenter, UIFactory.Warm);
+            savedText.text = "✓ Сохранено";
 
-            var fade = Stretch("Fade", root);
-            Img(fade, null, Color.black, false);
-            ui.fade = fade.gameObject.AddComponent<CanvasGroup>();
-            ui.fade.blocksRaycasts = false;
-            ui.fade.interactable = false;
+            var pause = Rect("PauseButton", root, new Vector2(1f, 1f), new Vector2(-95, -95), new Vector2(120, 120));
+            var pauseImg = Img(pause, "UI_Pause", new Color(1, 1, 1, 0.85f), true);
+            ui.pauseButton = pause.gameObject.AddComponent<Button>();
+            ui.pauseButton.targetGraphic = pauseImg;
+
+            var pp = Rect("Pause", root, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(760, 720));
+            Img(pp, "UI_Panel", new Color(0.03f, 0.04f, 0.09f, 0.85f), true);
+            var ptitle = Label(Rect("Title", pp, new Vector2(0.5f, 1f), new Vector2(0, -80), new Vector2(700, 110)), 84,
+                TextAnchor.MiddleCenter, UIFactory.Warm);
+            ptitle.font = UIFactory.Title;
+            ptitle.text = "Пауза";
+            ui.resumeButton = CenteredButton("Resume", pp, -220, "Продолжить");
+            ui.settingsButton = CenteredButton("SettingsBtn", pp, -330, "Настройки");
+            ui.restartButton = CenteredButton("Restart", pp, -440, "Начать уровень заново");
+            ui.menuButton = CenteredButton("Menu", pp, -550, "В главное меню");
+            ui.pausePanel = pp.gameObject;
+            ui.settings = UIFactory.Settings(root);
+
+            var fin = Rect("Finish", root, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100, 560));
+            Img(fin, "UI_Panel", new Color(0.02f, 0.03f, 0.08f, 0.8f), true);
+            ui.finishGroup = fin.gameObject.AddComponent<CanvasGroup>();
+            var ft = Stretch("Text", fin);
+            ft.offsetMin = new Vector2(40, 200);
+            ft.offsetMax = new Vector2(-40, -30);
+            ui.finishText = UIFactory.Label(ft, 64, TextAnchor.MiddleCenter, new Color(1f, 0.9f, 0.7f), UIFactory.Title);
+            ui.finishRetryButton = UIFactory.Button("Retry", fin, new Vector2(0.5f, 0f), new Vector2(-250, 110), new Vector2(440, 100), "Ещё раз", out var rl);
+            rl.alignment = TextAnchor.MiddleCenter;
+            ui.finishMenuButton = UIFactory.Button("ToMenu", fin, new Vector2(0.5f, 0f), new Vector2(250, 110), new Vector2(440, 100), "В меню", out var ml);
+            ml.alignment = TextAnchor.MiddleCenter;
+
+            ui.fade = UIFactory.Fade(root);
             ui.touchControls = controls.gameObject;
 
             var inputGo = new GameObject("LocalInput");
@@ -590,6 +589,13 @@ namespace Cats.EditorTools
             input.meowButton = meowButton;
             input.lookArea = lookArea;
             return ui;
+        }
+
+        static Button CenteredButton(string name, Transform parent, float y, string text)
+        {
+            var b = UIFactory.Button(name, parent, new Vector2(0.5f, 1f), new Vector2(0, y), new Vector2(620, 92), text, out var l, 42);
+            l.alignment = TextAnchor.MiddleCenter;
+            return b;
         }
 
         // ------------------------------------------------------------------ players + camera
@@ -643,6 +649,9 @@ namespace Cats.EditorTools
             gm.ui = ui;
             gm.player2Spawn = p2.transform;
             gm.players.Add(new GameManager.PlayerSlot { cat = cat, rig = rig });
+            gm.checkpointChime = AssetDatabase.LoadAssetAtPath<AudioClip>(CatsPaths.Root + "/Audio/sfx_chime.wav");
+            var refl = camGo.AddComponent<PlanarReflection>();
+            refl.reflectLayers = ~((1 << LayerMask.NameToLayer("UI")) | (1 << ProjectSetup.Layer(ProjectSetup.FxLayer)));
             return player.transform;
         }
     }

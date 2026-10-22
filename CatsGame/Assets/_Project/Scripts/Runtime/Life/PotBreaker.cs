@@ -16,7 +16,8 @@ namespace Cats
             if (_broken || c.relativeVelocity.magnitude < breakSpeed) return;
             if (c.collider.GetComponent<CatController>() != null) return;
             _broken = true;
-            if (breakClip != null) AudioSource.PlayClipAtPoint(breakClip, transform.position, 1f);
+            if (breakClip != null) AudioSource.PlayClipAtPoint(breakClip, transform.position, CatsVolume.Sfx);
+            SaveSystem.Data.potsBroken++;
             for (int i = 0; i < 7; i++)
             {
                 var s = GameObject.CreatePrimitive(PrimitiveType.Cube);

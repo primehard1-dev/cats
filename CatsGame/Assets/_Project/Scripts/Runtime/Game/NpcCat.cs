@@ -24,7 +24,7 @@ namespace Cats
         {
             if (Time.time - _lastReply < 3f) return;
             _lastReply = Time.time;
-            if (meow != null && _audio != null) _audio.PlayOneShot(meow, 0.9f);
+            if (meow != null && _audio != null) _audio.PlayOneShot(meow, 0.9f * CatsVolume.Sfx);
             if (distance < 6f && meowReplies.Length > 0)
                 GameManager.Instance?.Say(displayName, meowReplies[_reply++ % meowReplies.Length], 3f);
         }

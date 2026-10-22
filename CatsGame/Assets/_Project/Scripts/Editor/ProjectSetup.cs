@@ -10,6 +10,7 @@ namespace Cats.EditorTools
     {
         public const string PlayerLayer = "Player";
         public const string CatOnlyLayer = "CatOnly";
+        public const string FxLayer = "FX";
 
         public static void Run()
         {
@@ -51,6 +52,7 @@ namespace Cats.EditorTools
             var layers = tm.FindProperty("layers");
             EnsureLayer(layers, 8, PlayerLayer);
             EnsureLayer(layers, 9, CatOnlyLayer);
+            EnsureLayer(layers, 10, FxLayer);
             tm.ApplyModifiedProperties();
         }
 
