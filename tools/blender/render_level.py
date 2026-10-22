@@ -417,6 +417,9 @@ def main(out, width=1280, samples=64, cam_name="start"):
         "start": (L["startCamera"]["pos"], L["startCamera"]["lookAt"]),
         "garland": ({"x": 4.8, "y": 8.4, "z": 26.5}, {"x": 1.5, "y": 5.0, "z": 33.0}),
         "street": ({"x": 2.6, "y": -2.6, "z": 58.0}, {"x": 2.6, "y": -6.0, "z": 95.0}),
+        "baron": ({"x": 1.3, "y": 7.25, "z": 7.2}, {"x": 0.5, "y": 7.55, "z": 10.3}),
+        "cafe": ({"x": 7.6, "y": 2.6, "z": 50.5}, {"x": 8.2, "y": -2.6, "z": 58.0}),
+        "quay": ({"x": 2.6, "y": -7.35, "z": 81.0}, {"x": 47.0, "y": -12.0, "z": 181.0}),
     }
     cpos, clook = cams[cam_name]
     cam = bpy.data.cameras.new("Cam")
