@@ -1,0 +1,23 @@
+# Unity
+CatsGame/[Ll]ibrary/
+CatsGame/[Tt]emp/
+CatsGame/[Oo]bj/
+CatsGame/[Bb]uild/
+CatsGame/[Bb]uilds/
+CatsGame/[Ll]ogs/
+CatsGame/[Uu]serSettings/
+CatsGame/[Mm]emoryCaptures/
+CatsGame/*.csproj
+CatsGame/*.sln
+CatsGame/*.slnx
+CatsGame/.vs/
+CatsGame/.idea/
+*.apk
+*.aab
+
+# tools
+tools/compilecheck/bin/
+tools/compilecheck/obj/
+__pycache__/
+*.pyc
+.venv/

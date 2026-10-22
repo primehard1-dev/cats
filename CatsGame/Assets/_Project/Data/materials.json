@@ -1,0 +1,1367 @@
+{
+ "materials": [
+  {
+   "name": "M_TerraceTiles",
+   "shader": "lit",
+   "albedo": "T_TerraceTiles_A",
+   "normal": "T_TerraceTiles_N",
+   "mask": "T_TerraceTiles_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Plaster_Ochre",
+   "shader": "lit",
+   "albedo": "T_Plaster_A",
+   "normal": "T_Plaster_N",
+   "mask": "T_Plaster_M",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.72,
+    "b": 0.42,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.25,
+    "y": 0.25
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Plaster_Terracotta",
+   "shader": "lit",
+   "albedo": "T_Plaster_A",
+   "normal": "T_Plaster_N",
+   "mask": "T_Plaster_M",
+   "emission": "",
+   "color": {
+    "r": 0.9,
+    "g": 0.5,
+    "b": 0.36,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.25,
+    "y": 0.25
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Plaster_Pink",
+   "shader": "lit",
+   "albedo": "T_Plaster_A",
+   "normal": "T_Plaster_N",
+   "mask": "T_Plaster_M",
+   "emission": "",
+   "color": {
+    "r": 0.95,
+    "g": 0.66,
+    "b": 0.6,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.25,
+    "y": 0.25
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Plaster_Cream",
+   "shader": "lit",
+   "albedo": "T_Plaster_A",
+   "normal": "T_Plaster_N",
+   "mask": "T_Plaster_M",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.88,
+    "b": 0.7,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.25,
+    "y": 0.25
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Plaster_Yellow",
+   "shader": "lit",
+   "albedo": "T_Plaster_A",
+   "normal": "T_Plaster_N",
+   "mask": "T_Plaster_M",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.8,
+    "b": 0.48,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.25,
+    "y": 0.25
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Stone",
+   "shader": "lit",
+   "albedo": "T_Stone_A",
+   "normal": "T_Stone_N",
+   "mask": "T_Stone_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Cobble",
+   "shader": "lit",
+   "albedo": "T_Cobble_A",
+   "normal": "T_Cobble_N",
+   "mask": "T_Cobble_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.3333333333333333,
+    "y": 0.3333333333333333
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_RoofTiles",
+   "shader": "lit",
+   "albedo": "T_RoofTiles_A",
+   "normal": "T_RoofTiles_N",
+   "mask": "T_RoofTiles_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_PaintedMetal",
+   "shader": "lit",
+   "albedo": "T_PaintedMetal_A",
+   "normal": "T_PaintedMetal_N",
+   "mask": "T_PaintedMetal_M",
+   "emission": "",
+   "color": {
+    "r": 0.8,
+    "g": 0.8,
+    "b": 0.78,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_MetalDark",
+   "shader": "lit",
+   "albedo": "T_PaintedMetal_A",
+   "normal": "T_PaintedMetal_N",
+   "mask": "T_PaintedMetal_M",
+   "emission": "",
+   "color": {
+    "r": 0.22,
+    "g": 0.22,
+    "b": 0.23,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Iron",
+   "shader": "lit",
+   "albedo": "T_PaintedMetal_A",
+   "normal": "T_PaintedMetal_N",
+   "mask": "T_PaintedMetal_M",
+   "emission": "",
+   "color": {
+    "r": 0.045,
+    "g": 0.045,
+    "b": 0.05,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Pipe",
+   "shader": "lit",
+   "albedo": "T_PaintedMetal_A",
+   "normal": "T_PaintedMetal_N",
+   "mask": "T_PaintedMetal_M",
+   "emission": "",
+   "color": {
+    "r": 0.4,
+    "g": 0.38,
+    "b": 0.36,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_AwningBlue",
+   "shader": "lit",
+   "albedo": "T_AwningBlue_A",
+   "normal": "T_Fabric_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": true
+  },
+  {
+   "name": "M_AwningGreen",
+   "shader": "lit",
+   "albedo": "T_AwningGreen_A",
+   "normal": "T_Fabric_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": true
+  },
+  {
+   "name": "M_Shutter",
+   "shader": "lit",
+   "albedo": "T_Shutter_A",
+   "normal": "T_Shutter_N",
+   "mask": "T_Shutter_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_WindowLit",
+   "shader": "lit",
+   "albedo": "T_WindowLit_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_WindowLit_E",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.9,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 2.0,
+    "g": 1.6,
+    "b": 1.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_WindowDark",
+   "shader": "lit",
+   "albedo": "T_WindowDark_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.92,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Interior",
+   "shader": "lit",
+   "albedo": "T_Interior_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_Interior_E",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.9,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 1.8,
+    "g": 1.476,
+    "b": 1.08,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_LanternGlass",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.85,
+    "b": 0.6,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.8,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 7.0,
+    "g": 4.34,
+    "b": 2.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Bulb",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.9,
+    "b": 0.7,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.8,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 9.0,
+    "g": 6.4799999999999995,
+    "b": 3.6,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Terracotta",
+   "shader": "lit",
+   "albedo": "T_Terracotta_A",
+   "normal": "",
+   "mask": "T_Terracotta_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Wood",
+   "shader": "lit",
+   "albedo": "T_Wood_A",
+   "normal": "T_Wood_N",
+   "mask": "T_Wood_M",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_WoodDark",
+   "shader": "lit",
+   "albedo": "T_Wood_A",
+   "normal": "T_Wood_N",
+   "mask": "T_Wood_M",
+   "emission": "",
+   "color": {
+    "r": 0.35,
+    "g": 0.3,
+    "b": 0.28,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Foliage",
+   "shader": "litCutout",
+   "albedo": "T_Foliage_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.45,
+   "doubleSided": true
+  },
+  {
+   "name": "M_PalmFrond",
+   "shader": "litCutout",
+   "albedo": "T_PalmFrond_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.45,
+   "doubleSided": true
+  },
+  {
+   "name": "M_PalmTrunk",
+   "shader": "lit",
+   "albedo": "T_Wood_A",
+   "normal": "T_Wood_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.62,
+    "g": 0.52,
+    "b": 0.42,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Cypress",
+   "shader": "lit",
+   "albedo": "T_Cypress_A",
+   "normal": "T_Cypress_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.12,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Laundry",
+   "shader": "lit",
+   "albedo": "T_Laundry_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.08,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": true
+  },
+  {
+   "name": "M_CatBengal",
+   "shader": "lit",
+   "albedo": "T_CatBengal_A",
+   "normal": "T_CatFur_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.32,
+   "metallic": 0.0,
+   "normalScale": 0.6,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_CatGrey",
+   "shader": "lit",
+   "albedo": "T_CatGrey_A",
+   "normal": "T_CatFur_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 0.6,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_CatEye",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.32,
+    "g": 0.5,
+    "b": 0.12,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.97,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0.02,
+    "g": 0.04,
+    "b": 0.01,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_CatEyeCopper",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.75,
+    "g": 0.42,
+    "b": 0.08,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.97,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0.04,
+    "g": 0.02,
+    "b": 0.0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_CatNose",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.42,
+    "g": 0.2,
+    "b": 0.2,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.6,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_PawMarker",
+   "shader": "unlitTransparent",
+   "albedo": "T_PawMarker_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.25,
+    "g": 1.6,
+    "b": 1.7,
+    "a": 0.9
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Sea",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "T_Sea_N",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.012,
+    "g": 0.03,
+    "b": 0.06,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.08,
+    "y": 0.08
+   },
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "normalScale": 0.5,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_FarMatte",
+   "shader": "unlitCutout",
+   "albedo": "T_FarMatte_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.6,
+    "g": 1.6,
+    "b": 1.6,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.5,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Moon",
+   "shader": "unlitCutout",
+   "albedo": "T_Moon_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 3.2,
+    "g": 3.1,
+    "b": 2.8,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.5,
+   "doubleSided": false
+  },
+  {
+   "name": "M_FacadeFar",
+   "shader": "lit",
+   "albedo": "T_FacadeFar_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_FacadeFar_E",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.1,
+    "y": 0.08333333333333333
+   },
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 2.2,
+    "g": 1.7160000000000002,
+    "b": 1.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_FacadeFar_Ochre",
+   "shader": "lit",
+   "albedo": "T_FacadeFar_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_FacadeFar_E",
+   "color": {
+    "r": 1.0,
+    "g": 0.76,
+    "b": 0.5,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.1,
+    "y": 0.08333333333333333
+   },
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 2.2,
+    "g": 1.7160000000000002,
+    "b": 1.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_FacadeFar_Pink",
+   "shader": "lit",
+   "albedo": "T_FacadeFar_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_FacadeFar_E",
+   "color": {
+    "r": 0.96,
+    "g": 0.7,
+    "b": 0.64,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.1,
+    "y": 0.08333333333333333
+   },
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 2.2,
+    "g": 1.7160000000000002,
+    "b": 1.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_FacadeFar_Terracotta",
+   "shader": "lit",
+   "albedo": "T_FacadeFar_A",
+   "normal": "",
+   "mask": "",
+   "emission": "T_FacadeFar_E",
+   "color": {
+    "r": 0.88,
+    "g": 0.52,
+    "b": 0.4,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 0.1,
+    "y": 0.08333333333333333
+   },
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 2.2,
+    "g": 1.7160000000000002,
+    "b": 1.1,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_ShipHull",
+   "shader": "lit",
+   "albedo": "T_PaintedMetal_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.86,
+    "g": 0.87,
+    "b": 0.9,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_ShipLights",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.9,
+    "b": 0.7,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 6.0,
+    "g": 5.1,
+    "b": 3.5999999999999996,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_TowerLight",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.85,
+    "b": 0.6,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 4.0,
+    "g": 2.48,
+    "b": 1.2,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Wire",
+   "shader": "lit",
+   "albedo": "",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.03,
+    "g": 0.03,
+    "b": 0.03,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Sky",
+   "shader": "skybox",
+   "albedo": "T_SkyNight_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  }
+ ]
+}

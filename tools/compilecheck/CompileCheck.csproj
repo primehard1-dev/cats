@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Type-checks the Unity C# code outside Unity: dotnet build tools/compilecheck -p:UnityDlls=<folder with UnityEngine.dll + UnityEditor.dll> -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0618;CS0649;CS0414;CS0067</NoWarn>
+    <DefineConstants>$(DefineConstants);UNITY_EDITOR;$(ExtraDefines)</DefineConstants>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="../../CatsGame/Assets/_Project/Scripts/**/*.cs" />
+    <Reference Include="UnityEngine"><HintPath>$(UnityDlls)/UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEditor"><HintPath>$(UnityDlls)/UnityEditor.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
