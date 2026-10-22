@@ -67,6 +67,7 @@ MATERIALS = [
     m("M_PalmTrunk", albedo="T_Wood_A", normal="T_Wood_N", color=(0.62, 0.52, 0.42), smoothness=0.15),
     m("M_Cypress", albedo="T_Cypress_A", normal="T_Cypress_N", smoothness=0.12),
     m("M_Laundry", albedo="T_Laundry_A", smoothness=0.08, double_sided=True),
+    m("M_CatHero", albedo="T_CatHero_A", smoothness=0.28),
     m("M_CatBengal", albedo="T_CatBengal_A", normal="T_CatFur_N", smoothness=0.32, normal_scale=0.6),
     m("M_CatGrey", albedo="T_CatGrey_A", normal="T_CatFur_N", smoothness=0.3, normal_scale=0.6),
     m("M_CatEye", color=(0.32, 0.5, 0.12), smoothness=0.97, emission_color=(0.02, 0.04, 0.01)),

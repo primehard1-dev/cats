@@ -347,9 +347,30 @@ def main(out, width=1280, samples=64, cam_name="start"):
         ob = bpy.data.objects.new("Paw", me)
         bpy.context.scene.collection.objects.link(ob)
         ob.location = B(m["pos"]) + Vector((0, 0, 0.01))
-    # hero cat at spawn
-    hero = prop_instance({"model": "Cat_Hero", "pos": L["spawn"]["p1"], "rotY": L["spawn"]["rotY"],
-                          "scale": {"x": 1, "y": 1, "z": 1}})
+    # hero cat at spawn: the rigged CatHero.fbx if it exists, else the part-based placeholder
+    hero_fbx = os.path.join(os.path.dirname(DATA), "..", "Art", "Models", "CatHero.fbx")
+    if os.path.exists(hero_fbx):
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.fbx(filepath=hero_fbx, axis_forward="-Z", axis_up="Y")
+        new = [o for o in bpy.data.objects if o not in before]
+        img = bpy.data.images.load(os.path.join(TEX, "T_CatHero_A.png"))
+        hm = bpy.data.materials.new("M_CatHero_Preview")
+        hm.use_nodes = True
+        tn = hm.node_tree.nodes.new("ShaderNodeTexImage")
+        tn.image = img
+        bsdf = hm.node_tree.nodes["Principled BSDF"]
+        bsdf.inputs["Roughness"].default_value = 0.65
+        hm.node_tree.links.new(tn.outputs[0], bsdf.inputs["Base Color"])
+        for o in new:
+            if o.type == "MESH":
+                o.data.materials.clear()
+                o.data.materials.append(hm)
+            if o.parent is None:
+                o.location = B(L["spawn"]["p1"])
+                o.rotation_euler = Euler((o.rotation_euler.x, 0, math.radians(-L["spawn"]["rotY"])))
+    else:
+        prop_instance({"model": "Cat_Hero", "pos": L["spawn"]["p1"], "rotY": L["spawn"]["rotY"],
+                       "scale": {"x": 1, "y": 1, "z": 1}})
     npc = L["npc"]
     prop_instance({"model": npc["model"], "pos": npc["pos"], "rotY": npc["rotY"], "scale": {"x": 1, "y": 1, "z": 1}})
     # sea
@@ -417,6 +438,7 @@ def main(out, width=1280, samples=64, cam_name="start"):
         "start": (L["startCamera"]["pos"], L["startCamera"]["lookAt"]),
         "garland": ({"x": 4.8, "y": 8.4, "z": 26.5}, {"x": 1.5, "y": 5.0, "z": 33.0}),
         "street": ({"x": 2.6, "y": -2.6, "z": 58.0}, {"x": 2.6, "y": -6.0, "z": 95.0}),
+        "hero": ({"x": 1.75, "y": 6.36, "z": 2.3}, {"x": 1.2, "y": 6.2, "z": 1.6}),
         "baron": ({"x": 1.9, "y": 8.4, "z": 12.2}, {"x": 0.6, "y": 7.45, "z": 10.2}),
         "cafe": ({"x": 1.6, "y": -2.7, "z": 53.0}, {"x": 8.5, "y": -1.6, "z": 58.5}),
         "quay": ({"x": 2.6, "y": -7.2, "z": 81.0}, {"x": 47.0, "y": -4.0, "z": 181.0}),

@@ -19,6 +19,12 @@ namespace Cats.EditorTools
                 var inst = Object.Instantiate(model);
                 inst.name = model.name;
                 ApplyLibraryMaterials(inst);
+                foreach (var smr in inst.GetComponentsInChildren<SkinnedMeshRenderer>())
+                {
+                    smr.quality = SkinQuality.Bone2;
+                    smr.updateWhenOffscreen = false;
+                }
+                foreach (var anim in inst.GetComponentsInChildren<Animator>()) Object.DestroyImmediate(anim);
                 foreach (var r in inst.GetComponentsInChildren<Renderer>())
                 {
                     r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;

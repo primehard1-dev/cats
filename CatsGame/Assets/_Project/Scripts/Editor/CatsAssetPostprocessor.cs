@@ -97,7 +97,15 @@ namespace Cats.EditorTools
             mi.importNormals = ModelImporterNormals.Import;
             mi.isReadable = false;
             mi.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
-            bool dynamicModel = file.StartsWith("Cat_") || file == "Ship" || file == "Bulb";
+            bool dynamicModel = file.StartsWith("Cat") || file == "Ship" || file == "Bulb" || file == "Pigeon";
+            if (file == "CatHero")
+            {
+                // rigged hero cat: keep the skeleton (bones are driven by CatAnimator)
+                mi.animationType = ModelImporterAnimationType.Generic;
+                mi.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+                mi.optimizeGameObjects = false;
+                mi.skinWeights = ModelImporterSkinWeights.Standard;
+            }
             mi.generateSecondaryUV = !dynamicModel;
             mi.secondaryUVHardAngle = 70f;
             mi.secondaryUVPackMargin = 8f;

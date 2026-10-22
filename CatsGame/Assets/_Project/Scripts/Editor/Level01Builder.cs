@@ -611,7 +611,8 @@ namespace Cats.EditorTools
             cc.slopeLimit = 50f;
             cc.skinWidth = 0.015f;
             cc.minMoveDistance = 0f;
-            var model = PlaceProp("Cat_Hero", player.transform, L.spawn.p1, L.spawn.rotY, Vector3.one);
+            // the rigged CC-BY cat (tools/blender/import_cat.py) if present, else the part-based placeholder
+            var model = PlaceProp(PrefabFactory.Load("CatHero") != null ? "CatHero" : "Cat_Hero", player.transform, L.spawn.p1, L.spawn.rotY, Vector3.one);
             if (model != null) model.name = "Model";
             EditorUtil.SetLayerRecursive(player, _playerLayer);
 

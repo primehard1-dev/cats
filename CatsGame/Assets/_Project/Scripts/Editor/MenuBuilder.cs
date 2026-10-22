@@ -101,6 +101,8 @@ namespace Cats.EditorTools
                 "Ночь после дождя. Бенгальский кот выходит на мокрую террасу, а внизу у причала " +
                 "рыбаки разбирают ночной улов. Пройди по балконам, карнизам и гирлянде к морю.\n\n" +
                 "Модели, текстуры, звуки и музыка созданы процедурно (Python, Blender).\n" +
+                "Модель кота: «Cat 3D Model (FREE)» — Empire (sketchfab.com/empire2ofearth), CC BY 4.0, " +
+                "уменьшена и оснащена скелетом.\n" +
                 "Шрифты: Lobster и Nunito — SIL Open Font License.\nДвижок: Unity, Universal Render Pipeline.";
             mm.aboutBack = UIFactory.Button("Back", about, new Vector2(0.5f, 0f), new Vector2(0, 85), new Vector2(420, 96), "Назад", out var bl);
             bl.alignment = TextAnchor.MiddleCenter;
