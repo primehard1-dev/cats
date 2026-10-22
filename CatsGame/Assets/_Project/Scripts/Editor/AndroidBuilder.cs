@@ -41,8 +41,13 @@ namespace Cats.EditorTools
             if (Lightmapping.lightingDataAsset == null && !skipBake)
             {
                 Debug.Log("[Cats] Level was never baked, baking now (this takes a while)…");
-                Lightmapping.lightingSettings = LightingSetup.GetOrCreate();
-                if (!Lightmapping.Bake()) Debug.LogWarning("[Cats] Bake failed or was cancelled, building without baked light.");
+                var ls = LightingSetup.GetOrCreate();
+                // build servers have no GPU: the GPU lightmapper cannot start there
+                if (Application.isBatchMode) ls.lightmapper = LightingSettings.Lightmapper.ProgressiveCPU;
+                Lightmapping.lightingSettings = ls;
+                var t0 = System.DateTime.Now;
+                bool baked = Lightmapping.Bake();
+                Debug.Log($"[Cats] Bake {(baked ? "done" : "FAILED")} in {(System.DateTime.Now - t0).TotalMinutes:F1} min, lightmaps: {LightmapSettings.lightmaps.Length}");
                 EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             }
 
@@ -53,6 +58,7 @@ namespace Cats.EditorTools
                 return false;
             }
 
+            Debug.Log($"[Cats] Lightmaps in level: {LightmapSettings.lightmaps.Length}");
             CatsMenu.UpdateBuildScenes();
             Directory.CreateDirectory(Path.GetDirectoryName(ApkPath));
             EditorUserBuildSettings.buildAppBundle = false;
@@ -64,7 +70,7 @@ namespace Cats.EditorTools
                 options = BuildOptions.None,
             });
             bool ok = report.summary.result == BuildResult.Succeeded;
-            if (ok) Debug.Log($"[Cats] APK ready: {Path.GetFullPath(ApkPath)} ({report.summary.totalSize / (1024 * 1024)} MB)");
+            if (ok) Debug.Log($"[Cats] APK ready: {Path.GetFullPath(ApkPath)} ({new FileInfo(ApkPath).Length / (1024 * 1024)} MB)");
             else Debug.LogError($"[Cats] Android build failed: {report.summary.result}, {report.summary.totalErrors} errors. See the Console above.");
             return ok;
         }
