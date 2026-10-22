@@ -1,7 +1,7 @@
 name: Build APK
 
 # Builds CatsGame for Android in the cloud and attaches CatsMoonStreet.apk to the run (Artifacts section).
-# Needs repository secrets UNITY_EMAIL and UNITY_PASSWORD (a free Unity account).
+# Needs repository secrets UNITY_LICENSE (contents of Unity_lic.ulf), UNITY_EMAIL and UNITY_PASSWORD.
 
 on:
   push:
@@ -20,6 +20,7 @@ concurrency:
 
 env:
   UNITY_VERSION: 6000.0.31f1
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
@@ -30,9 +31,9 @@ jobs:
     timeout-minutes: 300
     steps:
       - name: Check Unity secrets
-        if: env.UNITY_EMAIL == '' || env.UNITY_PASSWORD == ''
+        if: env.UNITY_LICENSE == '' || env.UNITY_EMAIL == '' || env.UNITY_PASSWORD == ''
         run: |
-          echo "::error::Add repository secrets UNITY_EMAIL and UNITY_PASSWORD (Settings → Secrets and variables → Actions), then re-run this job."
+          echo "::error::Add repository secrets UNITY_LICENSE, UNITY_EMAIL and UNITY_PASSWORD (Settings → Secrets and variables → Actions), then re-run this job."
           exit 1
 
       - uses: jlumbroso/free-disk-space@v1.3.1
@@ -52,19 +53,35 @@ jobs:
           key: Library-Android-${{ hashFiles('CatsGame/Assets/**', 'CatsGame/Packages/**', 'CatsGame/ProjectSettings/**') }}
           restore-keys: Library-Android-
 
-      # Unity 6 activates the free Personal entitlement from the account login alone, so the editor is run
-      # directly (unity-builder would also try a serial taken from the license file).
-      - name: Build APK in Unity
-        env:
-          SKIP_BAKE: ${{ (github.event_name == 'workflow_dispatch' && !inputs.bake) && '-catsSkipBake' || '' }}
+      # Prints only non-secret facts about the license file (dates, serial prefix) to diagnose activation errors.
+      - name: Check license file
         run: |
-          docker run --rm -e UNITY_EMAIL -e UNITY_PASSWORD -e SKIP_BAKE \
-            -v "$GITHUB_WORKSPACE":/w -w /w \
-            unityci/editor:ubuntu-${UNITY_VERSION}-android-3 \
-            bash -c 'unity-editor -batchmode -nographics -logFile - \
-              -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD" \
-              -projectPath /w/CatsGame -buildTarget Android \
-              -executeMethod Cats.EditorTools.AndroidBuilder.BuildBatch $SKIP_BAKE'
+          python3 - <<'PY'
+          import base64, os, re
+          t = os.environ.get("UNITY_LICENSE", "")
+          print("license length:", len(t), "| xml:", "<root>" in t or "<License" in t)
+          for tag in ("InitialActivationDate", "StartDate", "StopDate", "UpdateDate"):
+              m = re.search(r"<%s Value=\"([^\"]*)\"" % tag, t)
+              print(tag, "=", m.group(1) if m else "missing")
+          m = re.search(r"<DeveloperData Value=\"([^\"]*)\"", t)
+          if not m:
+              raise SystemExit("::error::UNITY_LICENSE has no DeveloperData: it is not a Unity_lic.ulf file")
+          raw = base64.b64decode(m.group(1) + "==")[4:]
+          ok = re.fullmatch(rb"[A-Z0-9]{2}-[A-Z0-9-]{10,}", raw) is not None
+          print("serial looks valid:", ok, "| prefix:", raw[:3].decode("latin1") if ok else "-")
+          if not ok:
+              raise SystemExit("::error::UNITY_LICENSE does not contain a valid serial; re-create the Personal license in Unity Hub and copy Unity_lic.ulf again")
+          PY
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: CatsGame
+          unityVersion: ${{ env.UNITY_VERSION }}
+          targetPlatform: Android
+          buildMethod: Cats.EditorTools.AndroidBuilder.BuildBatch
+          versioning: None
+          allowDirtyBuild: true
+          customParameters: ${{ (github.event_name == 'workflow_dispatch' && !inputs.bake) && '-catsSkipBake' || '' }}
 
       - uses: actions/upload-artifact@v4
         with:
