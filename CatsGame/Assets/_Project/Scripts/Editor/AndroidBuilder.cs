@@ -10,6 +10,7 @@ namespace Cats.EditorTools
     /// One-click Android build: generates the scenes if they are missing, bakes the light if it was never baked,
     /// switches to Android and writes Builds/CatsMoonStreet.apk.
     /// Also callable from the command line: -batchmode -executeMethod Cats.EditorTools.AndroidBuilder.BuildBatch
+    /// (add -catsSkipBake to build without baking, e.g. for a quick CI check).
     /// </summary>
     public static class AndroidBuilder
     {
@@ -36,7 +37,8 @@ namespace Cats.EditorTools
             }
 
             EditorSceneManager.OpenScene(CatsPaths.Level01Scene);
-            if (Lightmapping.lightingDataAsset == null)
+            bool skipBake = System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-catsSkipBake") >= 0;
+            if (Lightmapping.lightingDataAsset == null && !skipBake)
             {
                 Debug.Log("[Cats] Level was never baked, baking now (this takes a while)…");
                 Lightmapping.lightingSettings = LightingSetup.GetOrCreate();
