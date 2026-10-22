@@ -34,6 +34,12 @@ namespace Cats
         public float jumpBuffer = 0.15f;
         public float safeFall = 4.2f;
 
+        [Header("Magnet jump / edges")]
+        [Tooltip("How far ahead a jump looks for a surface to land on")]
+        public float magnetRange = 2.8f;
+        [Tooltip("Higher drops than this stop the cat at the edge (it can still jump down)")]
+        public float edgeDrop = 0.6f;
+
         [Header("Paw markers")]
         public float markerRange = 3.2f;
         public float markerUp = 1.8f;
@@ -168,10 +174,10 @@ namespace Cats
                     hv += new Vector3(slope.x, 0f, slope.z) * slideAccel * dt;
                     if (hv.magnitude > slideMax) hv = hv.normalized * slideMax;
                 }
-                else if (mag < 0.6f && hv.sqrMagnitude > 0.01f && !HasFloorAhead(pos, hv.normalized))
+                else if (hv.sqrMagnitude > 0.01f)
                 {
-                    // careful walk: a cat does not step off an edge unless the player runs
-                    hv = Vector3.zero;
+                    // a cat never runs off an edge by accident: it stops or slides along it (jumping down still works)
+                    hv = KeepOnSurface(pos, hv);
                 }
 
                 if (TryEnterRope(pos, desired)) return;
@@ -189,6 +195,7 @@ namespace Cats
                 _jumpBufferTimer = 0f;
                 _lastGroundedTime = -10f;
                 if (TryMarkerJump(frame, pos)) return;
+                if (_ledge == null && mag > 0.1f && TryMagnetJump(frame.moveWorld.normalized, pos, mag)) return;
                 if (_ledge == null)
                 {
                     _velocity.y = Mathf.Sqrt(2f * gravity * jumpHeight);
@@ -214,10 +221,31 @@ namespace Cats
             return tag != null ? tag.kind : SurfaceKind.Normal;
         }
 
-        bool HasFloorAhead(Vector3 pos, Vector3 dir)
+        bool HasFloorAhead(Vector3 pos, Vector3 dir, float distance)
         {
-            var origin = pos + dir * 0.28f + Vector3.up * 0.3f;
-            return Physics.Raycast(origin, Vector3.down, 1.4f, environmentMask, QueryTriggerInteraction.Ignore);
+            var origin = pos + dir * distance + Vector3.up * 0.3f;
+            return Physics.Raycast(origin, Vector3.down, 0.3f + edgeDrop, environmentMask, QueryTriggerInteraction.Ignore);
+        }
+
+        static readonly float[] EdgeAngles = { 30f, -30f, 60f, -60f, 90f, -90f };
+
+        /// <summary>Removes the part of the motion that would carry the cat over an edge; keeps the part along it.</summary>
+        Vector3 KeepOnSurface(Vector3 pos, Vector3 hv)
+        {
+            float look = 0.18f + hv.magnitude * 0.07f;
+            var dir = hv.normalized;
+            if (HasFloorAhead(pos, dir, look)) return hv;
+            float best = 0f;
+            var bestDir = Vector3.zero;
+            foreach (float a in EdgeAngles)
+            {
+                var d = Quaternion.Euler(0f, a, 0f) * dir;
+                float along = Vector3.Dot(hv, d);
+                if (along <= best || !HasFloorAhead(pos, d, look)) continue;
+                best = along;
+                bestDir = d;
+            }
+            return bestDir * best;
         }
 
         void OnLand()
@@ -270,18 +298,64 @@ namespace Cats
                 if (score < bestScore) { bestScore = score; best = m; }
             }
             if (best == null) return false;
+            StartArc(pos, best.LandingPoint + Vector3.up * 0.02f);
+            return true;
+        }
 
-            var target = best.LandingPoint + Vector3.up * 0.02f;
+        /// <summary>
+        /// Jump that "sticks" to a surface: looks for the best place to land in the jump direction
+        /// (higher platforms first, then a comfortable distance) and flies there on an exact arc.
+        /// </summary>
+        bool TryMagnetJump(Vector3 dir, Vector3 pos, float mag)
+        {
+            float preferred = Mathf.Lerp(0.9f, 2.2f, mag);
+            float reach = markerUp + 0.4f;
+            var best = Vector3.zero;
+            float bestScore = float.MaxValue;
+            for (int ai = -2; ai <= 2; ai++)
+            {
+                var d = Quaternion.Euler(0f, ai * 12f, 0f) * dir;
+                for (float dist = 0.5f; dist <= magnetRange; dist += 0.25f)
+                {
+                    var top = pos + d * dist + Vector3.up * reach;
+                    if (!Physics.Raycast(top, Vector3.down, out var hit, reach + safeFall * 0.75f, environmentMask,
+                            QueryTriggerInteraction.Ignore)) continue;
+                    if (hit.normal.y < 0.75f) continue;
+                    float dy = hit.point.y - pos.y;
+                    float score = Mathf.Abs(dist - preferred) * 0.6f + Mathf.Abs(ai) * 0.15f
+                                  - Mathf.Clamp(dy, 0f, markerUp) * 0.8f + Mathf.Max(0f, -dy) * 0.5f;
+                    if (score >= bestScore) continue;
+                    if (Physics.CheckSphere(hit.point + Vector3.up * 0.22f, 0.11f, environmentMask, QueryTriggerInteraction.Ignore)) continue;
+                    if (!ArcClear(pos, hit.point, dy)) continue;
+                    bestScore = score;
+                    best = hit.point;
+                }
+            }
+            if (bestScore == float.MaxValue) return false;
+            StartArc(pos, best + Vector3.up * 0.02f);
+            return true;
+        }
+
+        bool ArcClear(Vector3 from, Vector3 to, float dy)
+        {
+            var a = from + Vector3.up * 0.25f;
+            var b = to + Vector3.up * 0.25f;
+            var apex = (a + b) * 0.5f + Vector3.up * (Mathf.Max(0f, dy) + 0.5f);
+            return !Physics.Linecast(a, apex, environmentMask, QueryTriggerInteraction.Ignore) &&
+                   !Physics.Linecast(apex, b, environmentMask, QueryTriggerInteraction.Ignore);
+        }
+
+        void StartArc(Vector3 pos, Vector3 target)
+        {
             var delta = target - pos;
             float h = new Vector3(delta.x, 0f, delta.z).magnitude;
             _jumpDuration = Mathf.Clamp(0.3f + h * 0.09f + Mathf.Max(0f, delta.y) * 0.12f, 0.32f, 0.75f);
             _jumpStart = pos;
             _jumpV0 = delta / _jumpDuration + Vector3.up * (0.5f * gravity * _jumpDuration);
             _jumpTime = 0f;
-            transform.rotation = Quaternion.LookRotation(new Vector3(delta.x, 0f, delta.z));
+            if (h > 0.01f) transform.rotation = Quaternion.LookRotation(new Vector3(delta.x, 0f, delta.z));
             SetState(State.MarkerJump);
             Jumped?.Invoke();
-            return true;
         }
 
         void UpdateMarkerJump(float dt)

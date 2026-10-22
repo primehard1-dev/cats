@@ -106,7 +106,7 @@ namespace Cats.EditorTools
                     var l = go.AddComponent<Light>();
                     l.type = LightType.Point;
                     l.color = new Color(1f, 0.7f, 0.42f);
-                    l.intensity = door ? 1.2f : 0.7f;
+                    l.intensity = (door ? 1.2f : 0.7f) * Level01Builder.LightBoost;
                     l.range = door ? 4f : 2.8f;
                     l.lightmapBakeType = LightmapBakeType.Baked;
                     l.shadows = LightShadows.Soft;

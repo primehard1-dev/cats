@@ -128,7 +128,7 @@ namespace Cats.EditorTools
             split.highlights.Override(new Color(1f, 0.69f, 0.38f));
             split.balance.Override(-20f);
             var color = Add<ColorAdjustments>();
-            color.postExposure.Override(0.25f);
+            color.postExposure.Override(0.6f);
             color.contrast.Override(12f);
             color.saturation.Override(8f);
             var vig = Add<Vignette>();
@@ -248,6 +248,9 @@ namespace Cats.EditorTools
             foreach (var r in go.GetComponentsInChildren<MeshRenderer>()) r.receiveGI = ReceiveGI.LightProbes;
         }
 
+        /// <summary>Lamps read too dim on phone screens with inverse-square falloff; all level lamps get this boost.</summary>
+        public const float LightBoost = 2.2f;
+
         static Light AddPointLight(string name, Transform parent, Vector3 localPos, Color color, float intensity, float range, string mode, bool shadows)
         {
             var go = new GameObject(name);
@@ -256,7 +259,7 @@ namespace Cats.EditorTools
             var l = go.AddComponent<Light>();
             l.type = LightType.Point;
             l.color = color;
-            l.intensity = intensity;
+            l.intensity = intensity * LightBoost;
             l.range = range;
             l.bounceIntensity = 1f;
             l.lightmapBakeType = mode == "mixed" ? LightmapBakeType.Mixed : mode == "realtime" ? LightmapBakeType.Realtime : LightmapBakeType.Baked;
@@ -612,8 +615,15 @@ namespace Cats.EditorTools
             cc.skinWidth = 0.015f;
             cc.minMoveDistance = 0f;
             // the rigged CC-BY cat (tools/blender/import_cat.py) if present, else the part-based placeholder
-            var model = PlaceProp(PrefabFactory.Load("CatHero") != null ? "CatHero" : "Cat_Hero", player.transform, L.spawn.p1, L.spawn.rotY, Vector3.one);
+            bool hero = PrefabFactory.Load("CatHero") != null;
+            var model = PlaceProp(hero ? "CatHero" : "Cat_Hero", player.transform, L.spawn.p1, L.spawn.rotY, Vector3.one);
             if (model != null) model.name = "Model";
+            // the rigged cat comes out of the FBX facing -Z: turn it so it runs head first
+            if (model != null && hero) model.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            // soft warm light that follows the cat, so it never disappears in the dark corners
+            var catLight = AddPointLight("CatLight", player.transform, new Vector3(0f, 1.1f, -0.6f),
+                new Color(1f, 0.85f, 0.68f), 1.4f, 3.2f, "realtime", false);
+            catLight.renderMode = LightRenderMode.ForcePixel;
             EditorUtil.SetLayerRecursive(player, _playerLayer);
 
             var cat = player.AddComponent<CatController>();

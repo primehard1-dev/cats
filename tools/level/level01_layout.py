@@ -491,10 +491,10 @@ for X in range(-8, 92, 4):
 
 level = {
     "name": "Level01_MoonStreet",
-    "moon": {"azimuth": MOON_AZIMUTH_DEG, "elevation": MOON_ELEVATION_DEG, "color": C(0.62, 0.72, 1.0), "intensity": 0.35,
+    "moon": {"azimuth": MOON_AZIMUTH_DEG, "elevation": MOON_ELEVATION_DEG, "color": C(0.62, 0.72, 1.0), "intensity": 0.8,
              "quadDistance": 250.0, "quadSize": 9.0},
-    "environment": {"ambientSky": C(0.10, 0.14, 0.26), "ambientEquator": C(0.07, 0.08, 0.13),
-                    "ambientGround": C(0.05, 0.04, 0.04), "fogColor": C(0.09, 0.12, 0.21), "fogStart": 80.0,
+    "environment": {"ambientSky": C(0.22, 0.29, 0.50), "ambientEquator": C(0.15, 0.16, 0.25),
+                    "ambientGround": C(0.10, 0.08, 0.07), "fogColor": C(0.09, 0.12, 0.21), "fogStart": 80.0,
                     "fogEnd": 3500.0},
     "spawn": {"p1": V(1.6, TY + 0.05, 1.2), "p2": V(1.6, TY + 0.05, 0.5), "rotY": 0.0},
     "startCamera": {"pos": V(-1.8, 8.1, 1.7), "lookAt": V(8.2, 5.79, 2.0)},
