@@ -16,7 +16,8 @@ Unity 6 (6000.0 LTS или новее), Universal Render Pipeline, Android, го
    - **5. Open main menu** — открыть меню: игра стартует с него (Продолжить / Новая прогулка / Настройки).
 4. **Play.** В редакторе: WASD — идти (Shift — бег), пробел — прыжок, M — мяу, правая кнопка мыши — камера.
    На телефоне: джойстик слева, прыжок справа, «мяу» рядом с прыжком, свайп по экрану — камера.
-5. Сборка: **File → Build Profiles → Android → Build**.
+5. Сборка APK: **Cats ▸ 6. Build APK for phone** → `CatsGame/Builds/CatsMoonStreet.apk`
+   (из командной строки: `-batchmode -executeMethod Cats.EditorTools.AndroidBuilder.BuildBatch`).
 
 Сцена целиком генерируется из `Assets/_Project/Data/level01.json`.
 Ручные правки в сцене пропадут при следующем **Cats ▸ 3**. Расстановку правьте в
