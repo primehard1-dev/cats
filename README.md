@@ -4,6 +4,7 @@
 
 ## Состав репозитория
 
+- [`docs/unity-setup.md`](docs/unity-setup.md) — **с чего начать:** пошаговая установка Unity и запуск игры (в редакторе и на телефоне).
 - [`CatsGame/`](CatsGame/README.md) — Unity-проект. Открыть в Unity 6 LTS, затем меню **Cats ▸ 0** и **Cats ▸ 4**.
 - [`docs/level-01/`](docs/level-01/README.md) — дизайн-документ уровня 1 «Лунная улица»: план, высоты, механики, свет, ассеты, бюджет.
 - [`docs/coop-hotspot.md`](docs/coop-hotspot.md) — план кооператива на двух телефонах через точку доступа.

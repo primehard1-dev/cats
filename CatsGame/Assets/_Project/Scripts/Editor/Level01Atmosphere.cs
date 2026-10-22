@@ -164,6 +164,40 @@ namespace Cats.EditorTools
                 halo.transform.localPosition = new Vector3(0f, 0f, 0.5f);
             }
 
+            // light trails of the shore lights, the lighthouse, the quay lamps and the cruise ship on the water
+            var glintPos = new List<Vector3>();
+            var glintStrength = new List<float>();
+            var rnd = new System.Random(7);
+            if (L.houses != null)
+                for (int i = 0; i < L.houses.Length; i += 2)
+                {
+                    var h = L.houses[i];
+                    if (h.pos.z < 95f || h.pos.y > -2f) continue;
+                    glintPos.Add(h.pos);
+                    glintStrength.Add(0.35f + 0.65f * (float)rnd.NextDouble());
+                }
+            Transform ship = null;
+            foreach (Transform t in GameObject.Find("Props").GetComponentsInChildren<Transform>())
+            {
+                if (t.name == "Lighthouse") { glintPos.Add(t.position); glintStrength.Add(1.6f); }
+                else if (t.name == "StreetLamp" && t.position.z > 85f) { glintPos.Add(t.position); glintStrength.Add(1.2f); }
+                else if (t.name == "Ship") ship = t;
+            }
+            var glints = new GameObject("SeaGlints");
+            glints.transform.SetParent(bg, false);
+            glints.AddComponent<MeshFilter>();
+            var gr = glints.AddComponent<MeshRenderer>();
+            gr.sharedMaterial = MaterialLibrary.Get("M_SeaGlint");
+            gr.shadowCastingMode = ShadowCastingMode.Off;
+            gr.receiveShadows = false;
+            gr.lightProbeUsage = LightProbeUsage.Off;
+            gr.reflectionProbeUsage = ReflectionProbeUsage.Off;
+            var sg = glints.AddComponent<Cats.SeaGlints>();
+            sg.lights = glintPos.ToArray();
+            sg.strength = glintStrength.ToArray();
+            sg.movingLights = ship != null ? new[] { ship } : new Transform[0];
+            sg.seaLevel = L.sea.y + 0.04f;
+
             mf.FlatQuad(Vector3.zero, Vector2.one, Vector3.up, Vector2.one);
             var path = Mesh("MoonPath", bg, meshes.Add(mf.ToMesh("MoonPath", false)), "M_MoonPath");
             var mp = path.AddComponent<Cats.MoonPath>();

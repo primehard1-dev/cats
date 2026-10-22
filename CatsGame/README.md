@@ -4,6 +4,8 @@ Unity 6 (6000.0 LTS или новее), Universal Render Pipeline, Android, го
 
 ## Первый запуск
 
+Подробная пошаговая инструкция и разбор частых проблемами: [`docs/unity-setup.md`](../docs/unity-setup.md).
+
 1. Unity Hub → **Add project from disk** → выбрать папку `CatsGame`.
    Открыть в Unity 6 LTS с модулем **Android Build Support**.
 2. Если Unity спросит про новый Input System и перезапуск — согласиться.
@@ -51,6 +53,7 @@ Assets/_Project/
 | `SaveSystem`, `SettingsPanel` | сохранение на чекпоинтах (JSON в persistentDataPath), рекорды, громкость, качество, камера |
 | `PlanarReflection`, `PuddleSurface`, `Cats/PuddleReflection.shader` | зеркальные отражения в лужах (только «красиво»/High) |
 | `Level01Atmosphere` | ореолы, световые конусы, свет из окон, подтёки, облака, лунная дорожка, частицы, ветер, голуби, звук |
+| `SeaGlints` | дорожки отражений береговых огней, маяка и корабля на море (всегда тянутся к камере, один draw call) |
 | `CatAudio`, `AmbientAudio` | шаги, мяу, мурчание; море, сверчки, ветер, колокол |
 
 ## Пересоздание ассетов (не обязательно)

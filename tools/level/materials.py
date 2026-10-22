@@ -101,6 +101,7 @@ MATERIALS = [
     m("M_LightCone", shader="unlitAdditive", albedo="T_LightCone_A", color=(0.55, 0.33, 0.14), double_sided=True),
     m("M_MoonHalo", shader="unlitAdditive", albedo="T_Glow_A", color=(0.32, 0.38, 0.55)),
     m("M_MoonPath", shader="unlitAdditive", albedo="T_MoonPath_A", color=(1.4, 1.45, 1.5)),
+    m("M_SeaGlint", shader="particlesAdditive", albedo="T_MoonPath_A", color=(1.6, 1.05, 0.55)),
     m("M_Clouds", shader="unlitTransparent", albedo="T_Clouds_A", color=(1, 1, 1), tiling=(4, 1)),
     m("M_Grime", shader="unlitTransparent", albedo="T_Grime_A", color=(1, 1, 1), alpha=0.75),
     m("M_Streaks", shader="unlitTransparent", albedo="T_Streaks_A", color=(1, 1, 1), alpha=0.6),

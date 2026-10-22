@@ -1654,6 +1654,35 @@
    "doubleSided": false
   },
   {
+   "name": "M_SeaGlint",
+   "shader": "particlesAdditive",
+   "albedo": "T_MoonPath_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.6,
+    "g": 1.05,
+    "b": 0.55,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
    "name": "M_Clouds",
    "shader": "unlitTransparent",
    "albedo": "T_Clouds_A",
