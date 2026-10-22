@@ -67,13 +67,13 @@ namespace UnityEngine.InputSystem
     public class Keyboard
     {
         public static Keyboard current => null;
-        public KeyControl wKey, aKey, sKey, dKey, upArrowKey, downArrowKey, leftArrowKey, rightArrowKey, leftShiftKey, spaceKey;
+        public KeyControl mKey, wKey, aKey, sKey, dKey, upArrowKey, downArrowKey, leftArrowKey, rightArrowKey, leftShiftKey, spaceKey;
     }
     public class Gamepad
     {
         public static Gamepad current => null;
         public StickControl leftStick, rightStick;
-        public ButtonControl buttonSouth;
+        public ButtonControl buttonSouth, buttonNorth;
     }
     public class Mouse
     {
@@ -149,4 +149,5 @@ namespace UnityEditor
 namespace UnityEditor.Rendering.Universal.ShaderGUI
 {
     public static class LitGUI { public static void SetMaterialKeywords(Material material) { } }
+    public static class ParticleGUI { public static void SetMaterialKeywords(Material material) { } }
 }

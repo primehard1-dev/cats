@@ -46,7 +46,7 @@ def setup_materials():
             nt.links.new(mapping.outputs[0], n.inputs[0])
             return n
 
-        unlit = d["shader"].startswith("unlit")
+        unlit = d["shader"].startswith("unlit") or d["shader"].startswith("particles")
         alb = _img(d["albedo"])
         base_socket = None
         if alb:
@@ -58,7 +58,7 @@ def setup_materials():
             nt.links.new(t.outputs["Color"], mix.inputs[6])
             mix.inputs[7].default_value = tint
             base_socket = mix.outputs[2]
-            if d["shader"] in ("litCutout", "unlitCutout", "unlitTransparent"):
+            if d["shader"] in ("litCutout", "unlitCutout", "unlitTransparent", "unlitAdditive", "particlesAdditive"):
                 nt.links.new(t.outputs["Alpha"], bsdf.inputs["Alpha"])
         if unlit:
             em = nt.nodes.new("ShaderNodeEmission")
@@ -69,7 +69,11 @@ def setup_materials():
             mixs = nt.nodes.new("ShaderNodeMixShader")
             trans = nt.nodes.new("ShaderNodeBsdfTransparent")
             if alb:
-                nt.links.new(t.outputs["Alpha"], mixs.inputs[0])
+                fac = nt.nodes.new("ShaderNodeMath")
+                fac.operation = "MULTIPLY"
+                fac.inputs[1].default_value = col["a"]
+                nt.links.new(t.outputs["Alpha"], fac.inputs[0])
+                nt.links.new(fac.outputs[0], mixs.inputs[0])
             else:
                 mixs.inputs[0].default_value = 1
             nt.links.new(trans.outputs[0], mixs.inputs[1])

@@ -32,6 +32,12 @@ namespace Cats
         public float damping = 10f;
         public float collisionRadius = 0.15f;
 
+        [Header("Feel")]
+        public float breathAmount = 0.012f;
+        public float runFovBoost = 4f;
+        Camera _cam;
+        float _baseFov;
+
         float _yaw, _pitch, _dist, _view, _side;
         float _lastLook = -10f;
         readonly List<CameraZone> _zones = new List<CameraZone>();
@@ -41,6 +47,8 @@ namespace Cats
 
         void Start()
         {
+            _cam = GetComponent<Camera>();
+            _baseFov = _cam.fieldOfView;
             _pitch = orbitPitch;
             _dist = distance;
             _view = viewPitch;
@@ -112,7 +120,15 @@ namespace Cats
                 desired = _pivot + dir / len * Mathf.Max(0.3f, hit.distance - 0.05f);
             transform.position = Vector3.Lerp(transform.position, desired, blend);
             float tilt = _view + (_pitch - orbitPitch) * 0.6f;
-            transform.rotation = Quaternion.Euler(tilt, _yaw, 0f);
+            float t = Time.time;
+            var breath = new Vector3(Mathf.PerlinNoise(t * 0.25f, 1.3f) - 0.5f, Mathf.PerlinNoise(t * 0.2f, 7.1f) - 0.5f, 0f) * 2f;
+            transform.rotation = Quaternion.Euler(tilt + breath.y * breathAmount * 40f, _yaw + breath.x * breathAmount * 40f, 0f);
+            if (_cam != null && target != null)
+            {
+                var cat = target.GetComponent<CatController>();
+                float run = cat != null ? Mathf.Clamp01((cat.Speed01 - 0.4f) / 0.6f) : 0f;
+                _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _baseFov + runFovBoost * run, 1f - Mathf.Exp(-Time.deltaTime * 3f));
+            }
         }
     }
 }

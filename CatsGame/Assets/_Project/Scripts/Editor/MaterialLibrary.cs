@@ -69,6 +69,8 @@ namespace Cats.EditorTools
                 "skybox" => "Skybox/Panoramic",
                 "unlitCutout" => "Universal Render Pipeline/Unlit",
                 "unlitTransparent" => "Universal Render Pipeline/Unlit",
+                "unlitAdditive" => "Universal Render Pipeline/Unlit",
+                "particlesAdditive" => "Universal Render Pipeline/Particles/Unlit",
                 _ => "Universal Render Pipeline/Lit",
             };
             var shader = Shader.Find(shaderName);
@@ -121,14 +123,17 @@ namespace Cats.EditorTools
                     mat.SetFloat("_SpecularHighlights", 1f);
                 }
                 bool cutout = d.shader == "litCutout" || d.shader == "unlitCutout";
-                bool transparent = d.shader == "unlitTransparent";
+                bool additive = d.shader == "unlitAdditive" || d.shader == "particlesAdditive";
+                bool particles = d.shader.StartsWith("particles");
+                bool transparent = d.shader == "unlitTransparent" || additive;
                 mat.SetFloat("_AlphaClip", cutout ? 1f : 0f);
                 mat.SetFloat("_Cutoff", cutout ? d.cutoff : 0.5f);
                 mat.SetFloat("_Surface", transparent ? 1f : 0f);
-                mat.SetFloat("_Blend", 0f);
-                mat.SetFloat("_Cull", d.doubleSided ? 0f : 2f);
+                mat.SetFloat("_Blend", additive ? 2f : 0f);
+                mat.SetFloat("_Cull", d.doubleSided || particles ? 0f : 2f);
                 mat.SetFloat("_ReceiveShadows", transparent ? 0f : 1f);
                 if (lit) BaseShaderGUI.SetMaterialKeywords(mat, LitGUI.SetMaterialKeywords);
+                else if (particles) BaseShaderGUI.SetMaterialKeywords(mat, null, ParticleGUI.SetMaterialKeywords);
                 else BaseShaderGUI.SetMaterialKeywords(mat);
                 if (transparent) mat.renderQueue = 3000;
                 else if (cutout) mat.renderQueue = 2450;

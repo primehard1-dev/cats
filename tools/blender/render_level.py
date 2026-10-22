@@ -222,6 +222,80 @@ def background(bg, eye):
     bpy.context.scene.collection.objects.link(ob)
 
 
+def cone_mesh(height, radius, top=0.05, seg=14):
+    bm = bmesh.new()
+    uv = bm.loops.layers.uv.new()
+    for i in range(seg):
+        a0, a1 = 2 * math.pi * i / seg, 2 * math.pi * (i + 1) / seg
+        pts = [(math.cos(a0) * radius, math.sin(a0) * radius, -height), (math.cos(a0) * top, math.sin(a0) * top, 0),
+               (math.cos(a1) * top, math.sin(a1) * top, 0), (math.cos(a1) * radius, math.sin(a1) * radius, -height)]
+        f = bm.faces.new([bm.verts.new(p) for p in pts])
+        for loop, u in zip(f.loops, [(i / seg, 0), (i / seg, 1), ((i + 1) / seg, 1), ((i + 1) / seg, 0)]):
+            loop[uv].uv = u
+    me = bpy.data.meshes.new("Cone")
+    bm.to_mesh(me)
+    bm.free()
+    me.materials.append(mat("M_LightCone"))
+    return me
+
+
+def atmosphere(L):
+    """Mirror of Level01Atmosphere.cs: window spill lights, light shafts, wall grime, pigeons."""
+    street_cone, wall_cone = cone_mesh(3.0, 1.25), cone_mesh(1.9, 0.85, 0.04)
+    for p in L["props"]:
+        name = p["model"]
+        base = B(p["pos"])
+        rot = Euler((0, 0, math.radians(-p["rotY"])))
+        if name in ("Lantern_Wall", "StreetLamp"):
+            off = light_point_offset(name)
+            if off is None:
+                continue
+            off = off.copy()
+            off.rotate(rot)
+            ob = bpy.data.objects.new("Shaft", street_cone if name == "StreetLamp" else wall_cone)
+            bpy.context.scene.collection.objects.link(ob)
+            ob.location = base + off + Vector((0, 0, -0.12))
+        elif name.startswith("Window_Lit") or name == "Door_Balcony":
+            door = name == "Door_Balcony"
+            off = Vector((0, -0.55, 1.4 if door else 0.9))
+            off.rotate(rot)
+            ld = bpy.data.lights.new("Spill", "POINT")
+            ld.color = (1.0, 0.7, 0.42)
+            ld.energy = (1.2 if door else 0.7) * 55
+            ld.shadow_soft_size = 0.3
+            ob = bpy.data.objects.new("Spill", ld)
+            bpy.context.scene.collection.objects.link(ob)
+            ob.location = base + off
+    for d in L.get("decals", []):
+        me = bpy.data.meshes.new("Decal")
+        me.from_pydata([tuple(B(d[k])) for k in "abcd"], [], [(0, 1, 2, 3)])
+        me.uv_layers.new()
+        u, v = d["uv"]["x"], d["uv"]["y"]
+        for i, uvv in enumerate([(0, 0), (u, 0), (u, v), (0, v)]):
+            me.uv_layers[0].data[i].uv = uvv
+        me.materials.append(mat(d["mat"]))
+        ob = bpy.data.objects.new("Decal", me)
+        bpy.context.scene.collection.objects.link(ob)
+    for pg in L.get("pigeons", []):
+        prop_instance({"model": "Pigeon", "pos": pg["pos"], "rotY": pg["rotY"], "scale": {"x": 1, "y": 1, "z": 1}})
+
+
+def bloom(path, threshold=0.72, strength=0.6):
+    """Cheap bloom on the saved frame (Unity adds real HDR bloom; the CPU-only compositor is not available here)."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+    img = Image.open(path).convert("RGB")
+    arr = np.asarray(img).astype(np.float32) / 255.0
+    lum = arr.max(axis=2, keepdims=True)
+    bright = np.clip((lum - threshold) / (1 - threshold), 0, 1) * arr
+    glow = np.zeros_like(arr)
+    for radius, w in ((4, 0.5), (14, 0.35), (40, 0.25)):
+        b = Image.fromarray((bright * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(radius * img.width / 1600))
+        glow += np.asarray(b).astype(np.float32) / 255.0 * w
+    out = 1 - (1 - arr) * (1 - np.clip(glow * strength, 0, 1))
+    Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8)).save(path)
+
+
 def main(out, width=1280, samples=64, cam_name="start"):
     with open(DATA) as f:
         L = json.load(f)
@@ -261,6 +335,7 @@ def main(out, width=1280, samples=64, cam_name="start"):
         point_light(l["name"], B(l["pos"]), l["color"], l["intensity"], l["range"])
     for g in L["garlands"]:
         garland(g)
+    atmosphere(L)
     for m in L["markers"]:
         me = bpy.data.meshes.new("Paw")
         s = 0.16
@@ -315,6 +390,17 @@ def main(out, width=1280, samples=64, cam_name="start"):
     bpy.context.scene.collection.objects.link(mo)
     mo.location = B(eye) + bdir * moon["quadDistance"]
     mo.rotation_euler = (-bdir).to_track_quat("Z", "Y").to_euler()
+    hd = bpy.data.meshes.new("MoonHalo")
+    q = moon["quadSize"] * 2.0
+    hd.from_pydata([(-q, -q, 0), (q, -q, 0), (q, q, 0), (-q, q, 0)], [], [(0, 1, 2, 3)])
+    hd.uv_layers.new()
+    for i, uvv in enumerate([(0, 0), (1, 0), (1, 1), (0, 1)]):
+        hd.uv_layers[0].data[i].uv = uvv
+    hd.materials.append(mat("M_MoonHalo"))
+    ho = bpy.data.objects.new("MoonHalo", hd)
+    bpy.context.scene.collection.objects.link(ho)
+    ho.location = mo.location + bdir * 0.5
+    ho.rotation_euler = mo.rotation_euler
     # world: night panorama
     scn = bpy.context.scene
     world = bpy.data.worlds.new("Night")
@@ -355,6 +441,7 @@ def main(out, width=1280, samples=64, cam_name="start"):
     scn.view_settings.exposure = 0.6
     scn.render.filepath = out
     bpy.ops.render.render(write_still=True)
+    bloom(out)
 
 
 if __name__ == "__main__":

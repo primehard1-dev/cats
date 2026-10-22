@@ -59,7 +59,8 @@ namespace Cats.EditorTools
             BuildProbes();
             BuildGameplay();
             var ui = BuildUI(out var input);
-            BuildPlayers(ui, input);
+            var player = BuildPlayers(ui, input, out var cam);
+            Level01Atmosphere.Build(L, _props, _background, _meshes, player, cam);
 
             _meshes.Save();
             Lightmapping.lightingSettings = LightingSetup.GetOrCreate();
@@ -545,6 +546,10 @@ namespace Cats.EditorTools
             Img(jump, "UI_JumpButton", new Color(1, 1, 1, 0.9f), true);
             var jumpButton = jump.gameObject.AddComponent<JumpButton>();
 
+            var meow = Rect("MeowButton", controls, new Vector2(1, 0), new Vector2(-420, 150), new Vector2(150, 150));
+            Img(meow, "UI_MeowButton", new Color(1, 1, 1, 0.85f), true);
+            var meowButton = meow.gameObject.AddComponent<JumpButton>();
+
             var hint = Rect("Hint", root, new Vector2(0.5f, 1f), new Vector2(0, -90), new Vector2(1500, 110));
             Img(hint, "UI_Panel", new Color(0.02f, 0.03f, 0.08f, 0.55f), false);
             ui.hintGroup = hint.gameObject.AddComponent<CanvasGroup>();
@@ -582,12 +587,13 @@ namespace Cats.EditorTools
             input = inputGo.AddComponent<LocalCatInput>();
             input.joystick = joystick;
             input.jumpButton = jumpButton;
+            input.meowButton = meowButton;
             input.lookArea = lookArea;
             return ui;
         }
 
         // ------------------------------------------------------------------ players + camera
-        static void BuildPlayers(GameUI ui, LocalCatInput input)
+        static Transform BuildPlayers(GameUI ui, LocalCatInput input, out Camera cam)
         {
             var player = new GameObject("Player1");
             player.transform.SetPositionAndRotation(L.spawn.p1, Quaternion.Euler(0f, L.spawn.rotY, 0f));
@@ -610,7 +616,7 @@ namespace Cats.EditorTools
             anim.model = model != null ? model.transform : player.transform;
 
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
-            var cam = camGo.AddComponent<Camera>();
+            cam = camGo.AddComponent<Camera>();
             cam.fieldOfView = 50f;
             cam.nearClipPlane = 0.05f;
             cam.farClipPlane = 4000f;
@@ -637,6 +643,7 @@ namespace Cats.EditorTools
             gm.ui = ui;
             gm.player2Spawn = p2.transform;
             gm.players.Add(new GameManager.PlayerSlot { cat = cat, rig = rig });
+            return player.transform;
         }
     }
 }

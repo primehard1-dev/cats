@@ -122,6 +122,22 @@ namespace Cats.EditorTools
                  new Vector2(0, 0), new Vector2(0, uvScale.y), new Vector2(uvScale.x, uvScale.y), new Vector2(uvScale.x, 0));
         }
 
+        /// <summary>Open cone, apex at the origin pointing up, opening downwards (fake light shaft). V = 1 at the top.</summary>
+        public void Cone(float height, float radius, float topRadius = 0.05f, int segments = 14)
+        {
+            for (int i = 0; i < segments; i++)
+            {
+                float a0 = i * Mathf.PI * 2f / segments, a1 = (i + 1) * Mathf.PI * 2f / segments;
+                var t0 = new Vector3(Mathf.Cos(a0) * topRadius, 0f, Mathf.Sin(a0) * topRadius);
+                var t1 = new Vector3(Mathf.Cos(a1) * topRadius, 0f, Mathf.Sin(a1) * topRadius);
+                var b0 = new Vector3(Mathf.Cos(a0) * radius, -height, Mathf.Sin(a0) * radius);
+                var b1 = new Vector3(Mathf.Cos(a1) * radius, -height, Mathf.Sin(a1) * radius);
+                var n = new Vector3(Mathf.Cos((a0 + a1) * 0.5f), 0.2f, Mathf.Sin((a0 + a1) * 0.5f)).normalized;
+                float u0 = (float)i / segments, u1 = (float)(i + 1) / segments;
+                Quad(b0, t0, t1, b1, n, new Vector2(u0, 0), new Vector2(u0, 1), new Vector2(u1, 1), new Vector2(u1, 0));
+            }
+        }
+
         /// <summary>Thin tube along a polyline (garland wire).</summary>
         public void Tube(IList<Vector3> path, float radius, int sides = 5)
         {

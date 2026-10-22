@@ -57,6 +57,11 @@ namespace Cats
         public bool OnLedge => _ledge != null;
         public event System.Action Landed;
         public event System.Action Jumped;
+        public event System.Action Meowed;
+        /// <summary>Seconds since the player last moved or jumped (the cat sits down after a while).</summary>
+        public float IdleTime { get; private set; }
+        /// <summary>Collider the cat stands on (null in the air).</summary>
+        public Collider Ground => IsGrounded ? _groundCollider : null;
 
         CharacterController _cc;
         Vector3 _velocity;
@@ -111,6 +116,9 @@ namespace Cats
             else _jumpBufferTimer -= dt;
             _grabCooldown -= dt;
             _stateTime += dt;
+            bool active = frame.moveWorld.sqrMagnitude > 0.01f || frame.jumpDown || CurrentState != State.Normal || !IsGrounded;
+            IdleTime = active ? 0f : IdleTime + dt;
+            if (frame.meowDown) Meowed?.Invoke();
 
             switch (CurrentState)
             {

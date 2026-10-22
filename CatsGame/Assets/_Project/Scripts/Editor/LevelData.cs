@@ -83,6 +83,11 @@ namespace Cats.EditorTools
     [Serializable] public class SeaData { public float y; public Vector3 center, size; }
     [Serializable] public class BackgroundData { public float radius, height, y, arcStart, arcEnd; }
 
+    [Serializable] public class DecalData { public string mat; public Vector3 a, b, c, d; public Vector2 uv; }
+    [Serializable] public class PigeonData { public Vector3 pos; public float rotY; }
+    [Serializable] public class SoundData { public string clip; public Vector3 pos; public float volume, minDistance, maxDistance; }
+    [Serializable] public class PointData { public Vector3 pos; }
+
     [Serializable] public class LevelData
     {
         public string name;
@@ -108,6 +113,11 @@ namespace Cats.EditorTools
         public HouseData[] houses;
         public GarlandData[] garlands;
         public Vector3[] lightProbes;
+        public DecalData[] decals;
+        public PigeonData[] pigeons;
+        public BoxData[] fireflies, drips, ripples;
+        public PointData[] tvLights;
+        public SoundData[] sounds;
 
         public Vector3 MoonDirection
         {

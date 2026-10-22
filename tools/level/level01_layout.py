@@ -20,7 +20,8 @@ STREET_W = 5.2
 
 rnd = random.Random(2026)
 L = {k: [] for k in ("blocks", "roofs", "props", "lights", "markers", "checkpoints", "killZones", "cameraZones",
-                      "ropes", "ledgeZones", "reflectionProbes", "houses", "garlands", "lightProbes")}
+                      "ropes", "ledgeZones", "reflectionProbes", "houses", "garlands", "lightProbes",
+                      "decals", "pigeons", "fireflies", "drips", "ripples", "tvLights", "sounds")}
 
 
 def V(X, Y, Zd):
@@ -391,6 +392,77 @@ for X, Zd in ((96, -30), (110, -46), (125, -50), (98, 48), (112, 60), (140, 75))
 prop("BellTower", 265.0, 2.0, -95.0, 30.0, light=lamp_light(6.0, 30.0))
 prop("Lighthouse", 330.0, -8.6, 165.0, 0.0, light=lamp_light(8.0, 40.0))
 prop("Ship", 1300.0, -9.3, 400.0, 75.0, scale=0.6, static=False)
+
+# ================================================================== atmosphere & life
+def decal(mat, corners, uv):
+    """corners in doc coordinates (X, Y, Zd), counter-clockwise seen from the front."""
+    L["decals"].append({"mat": mat, "a": V(*corners[0]), "b": V(*corners[1]), "c": V(*corners[2]), "d": V(*corners[3]),
+                        "uv": {"x": uv[0], "y": uv[1]}})
+
+
+# dirt at the bottom of the walls (follows the slope of the street) and streaks under ledges/balconies
+for x0, x1, _top, _mat in left_houses:
+    X = x0
+    while X < x1:
+        Xn = min(x1, X + 4.0)
+        ya, yb = street_y(X), street_y(Xn)
+        decal("M_Grime", [(X, ya - 0.05, 0.015), (Xn, yb - 0.05, 0.015), (Xn, yb + 1.6, 0.015), (X, ya + 1.6, 0.015)],
+              ((Xn - X) / 2.0, 1.0))
+        X = Xn
+for x0, x1, _top, _mat in right_houses:
+    X = x0
+    while X < x1:
+        Xn = min(x1, X + 4.0)
+        ya, yb = street_y(X), street_y(Xn)
+        z = STREET_W - 0.015
+        decal("M_Grime", [(Xn, yb - 0.05, z), (X, ya - 0.05, z), (X, ya + 1.6, z), (Xn, yb + 1.6, z)], ((Xn - X) / 2.0, 1.0))
+        X = Xn
+for X0, X1, Ytop in ((11.0, 23.0, B1 - 0.2), (8.0, 11.0, B1 - 0.6), (26.5, 29.5, B2 - 0.2), (0.0, 6.0, TY - 1.2),
+                     (-12.0, 70.0, 12.3), (23.0, 33.0, 10.0), (33.0, 46.0, 8.8)):
+    X = X0
+    while X < X1:
+        Xn = min(X1, X + 4.0)
+        decal("M_Streaks", [(X, Ytop - 1.4, 0.02), (Xn, Ytop - 1.4, 0.02), (Xn, Ytop, 0.02), (X, Ytop, 0.02)], ((Xn - X) / 2.0, 1.0))
+        X = Xn
+
+# a warm, glowing lane: lanterns low on both facades along the street (the reference street glows)
+for X in range(8, 68, 10):
+    prop("Lantern_Wall", X + 0.5, street_y(X + 0.5) + 3.1, 0.0, LEFT, light=lamp_light(2.8, 8.5))
+    prop("Lantern_Wall", X + 5.5, street_y(X + 5.5) + 3.1, STREET_W, RIGHT, light=lamp_light(2.6, 8.0))
+
+# more greenery around the start (the reference is full of plants)
+prop("Ivy_Tall", 2.3, TY - 0.3, 0.0, LEFT)
+prop("Ivy_Patch", 6.4, TY + 0.9, 0.0, LEFT, scale=0.8)
+prop("Bougainvillea", 2.4, TY + 3.5, 0.0, LEFT, scale=0.7)
+prop("FlowerBox_Red", 4.2, TY + 3.2, 0.0, LEFT)
+prop("Pot_Small", 4.5, TY + 0.45, 2.3, 0.0)
+prop("Bougainvillea", 9.4, B1 + 2.9, 0.0, LEFT)
+prop("Ivy_Tall", 14.6, B1 - 0.1, 0.0, LEFT, scale=(1.0, 0.7, 1.0))
+prop("FlowerBox_White", 13.5, B1 + 1.0, 0.0, LEFT)
+
+# pigeons: one waits on the terrace parapet so the world reacts right at the start
+for X, Y, Zd, r in ((5.8, TY + 0.45, 0.9, 200.0), (10.8, B1 + 1.0, 1.05, 160.0), (37.4, R1 + 0.5, 4.15, 110.0),
+                    (38.3, R1 + 0.5, 4.15, 70.0), (44.5, 4.56, 8.5, 20.0), (56.0, CAFE + 2.9, 8.6, 300.0)):
+    L["pigeons"].append({"pos": V(X, Y, Zd), "rotY": r})
+
+# fireflies in the gardens, drips from awnings and balconies, ripples in puddles
+for X, Y, Zd, rad in ((56.5, CAFE + 1.6, 7.6, 2.5), (37.5, R1 + 1.0, 9.5, 2.0), (-2.0, 11.8, STREET_W + 3.2, 2.5),
+                      (85.0, -7.2, 14.0, 4.0), (84.0, -7.2, -12.0, 4.0)):
+    L["fireflies"].append({"pos": V(X, Y, Zd), "size": S(rad * 2, 1.6, rad * 2)})
+for X, Y, Zd, w in ((25.0, 6.32, 1.55, 3.0), (9.5, B1 - 0.2, 1.1, 3.0), (28.0, B2 - 0.2, 1.2, 3.0),
+                    (57.0, CAFE + 2.0, STREET_W + 4.5, 3.0), (47.0, 0.85, 1.5, 3.0)):
+    L["drips"].append({"pos": V(X, Y, Zd), "size": S(w, 0.02, 0.1)})
+for X, Y, Zd, w, d in ((2.5, TY + 0.01, 1.2, 4.0, 1.8), (28.0, B2 + 0.01, 0.6, 2.6, 1.0), (40.0, R1 + 0.01, 7.5, 5.0, 5.0),
+                       (57.0, CAFE + 0.03, 8.0, 5.0, 4.0), (64.0, street_y(64) + 0.03, 2.6, 8.0, 4.0)):
+    L["ripples"].append({"pos": V(X, Y, Zd), "size": S(w, 0.01, d)})
+
+# someone watching TV across the street
+L["tvLights"].append({"pos": V(2.2, 5.3, STREET_W - 0.6)})
+
+# positional sounds
+L["sounds"].append({"clip": "mus_cafe_waltz", "pos": V(57.5, CAFE + 1.5, 10.5), "volume": 0.55, "minDistance": 3.0, "maxDistance": 75.0})
+L["sounds"].append({"clip": "amb_lantern_hum", "pos": V(3.1, TY + 2.2, 0.3), "volume": 0.12, "minDistance": 0.4, "maxDistance": 4.0})
+L["sounds"].append({"clip": "amb_lantern_hum", "pos": V(33.2, B3 + 2.1, STREET_W - 0.4), "volume": 0.1, "minDistance": 0.4, "maxDistance": 4.0})
 
 # ================================================================== probes, spawn, camera, exit
 for (X0, X1, Y0, Y1, Z0, Z1, imp) in ((-0.5, 6.5, 5.6, 9.5, 0.0, 2.6, 2), (6.0, 11.5, 6.0, 10.0, 0.0, 2.0, 2),

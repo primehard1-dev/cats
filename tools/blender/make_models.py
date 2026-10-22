@@ -638,6 +638,38 @@ def cat_baron():
     return [root]
 
 
+def pigeon():
+    mat = "M_Pigeon"
+    root = empty("Pigeon", (0, 0, 0))
+    root["_world_origin"] = (0, 0, 0)
+
+    def body(mb):
+        mb.loft([((0, 0.13, 0.11), 0.01, 0.006), ((0, 0.09, 0.11), 0.045, 0.035), ((0, 0.03, 0.12), 0.06, 0.055),
+                 ((0, -0.03, 0.13), 0.055, 0.055), ((0, -0.07, 0.15), 0.03, 0.03)], mat, seg=10)
+        mb.loft([((0, 0.12, 0.115), 0.03, 0.004), ((0, 0.19, 0.12), 0.045, 0.004)], mat, seg=6, cap=True)
+        for s in (-1, 1):
+            mb.tube([(s * 0.015, 0.02, 0.08), (s * 0.017, 0.02, 0.0)], 0.005, "M_CatNose", seg=4)
+
+    b = _part("Body", body, (0, 0, 0.12), root)
+
+    def head(mb):
+        mb.sphere((0, -0.085, 0.18), 0.026, mat, seg=10, rings=7)
+        mb.tube([(0, -0.108, 0.177), (0, -0.125, 0.172)], 0.005, "M_CatNose", seg=4, radii=[0.006, 0.002])
+        for s in (-1, 1):
+            mb.sphere((s * 0.018, -0.096, 0.188), 0.005, "M_CatEyeCopper", seg=6, rings=4)
+
+    _part("Head", head, (0, -0.065, 0.16), b)
+    for s, tag in ((-1, "L"), (1, "R")):
+        def wing(mb, s=s):
+            mb.face([(s * 0.03, -0.03, 0.15), (s * 0.03, 0.09, 0.14), (s * 0.2, 0.1, 0.15), (s * 0.18, -0.01, 0.16)],
+                    [(0, 0), (0, 1), (1, 1), (1, 0)], mat)
+            mb.face([(s * 0.18, -0.01, 0.16), (s * 0.2, 0.1, 0.15), (s * 0.03, 0.09, 0.14), (s * 0.03, -0.03, 0.15)],
+                    [(1, 0), (1, 1), (0, 1), (0, 0)], mat)
+
+        _part("Wing" + tag, wing, (s * 0.03, 0.03, 0.15), b)
+    return [root]
+
+
 # ============================================================== registry / export
 MODELS = {
     "AC_Unit": ac_unit,
@@ -679,6 +711,7 @@ MODELS = {
     "Lighthouse": lighthouse,
     "Cat_Hero": cat_hero,
     "Cat_Baron": cat_baron,
+    "Pigeon": pigeon,
 }
 
 
@@ -708,5 +741,5 @@ def export_all(out_dir, only=None):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("-")]
-    out = args[0] if args else OUT
+    out = args[0] if args and args[0] else OUT
     export_all(out, set(args[1:]) or None)

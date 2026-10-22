@@ -10,6 +10,7 @@ namespace Cats
     {
         public VirtualJoystick joystick;
         public JumpButton jumpButton;
+        public JumpButton meowButton;
         public LookArea lookArea;
         public CatCameraRig cameraRig;
         public float stickLookSpeed = 900f;
@@ -44,6 +45,7 @@ namespace Cats
             bool buttonPress = jumpButton != null && jumpButton.ConsumePress();
             frame.jumpDown = buttonPress || DeviceJumpDown();
             frame.jumpHeld = (jumpButton != null && jumpButton.Held) || DeviceJumpHeld();
+            frame.meowDown = (meowButton != null && meowButton.ConsumePress()) || DeviceMeowDown();
             return frame;
         }
 
@@ -92,6 +94,13 @@ namespace Cats
             var gp = Gamepad.current;
             return (kb != null && kb.spaceKey.isPressed) || (gp != null && gp.buttonSouth.isPressed);
         }
+
+        static bool DeviceMeowDown()
+        {
+            var kb = Keyboard.current;
+            var gp = Gamepad.current;
+            return (kb != null && kb.mKey.wasPressedThisFrame) || (gp != null && gp.buttonNorth.wasPressedThisFrame);
+        }
 #else
         static Vector2 DeviceMove()
         {
@@ -108,6 +117,7 @@ namespace Cats
 
         static bool DeviceJumpDown() => Input.GetKeyDown(KeyCode.Space);
         static bool DeviceJumpHeld() => Input.GetKey(KeyCode.Space);
+        static bool DeviceMeowDown() => Input.GetKeyDown(KeyCode.M);
 #endif
     }
 }

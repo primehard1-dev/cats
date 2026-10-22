@@ -66,6 +66,21 @@ namespace Cats.EditorTools
             ti.SetPlatformTextureSettings(android);
         }
 
+        void OnPreprocessAudio()
+        {
+            if (!assetPath.StartsWith(CatsPaths.Root + "/Audio")) return;
+            var ai = (AudioImporter)assetImporter;
+            string file = System.IO.Path.GetFileNameWithoutExtension(assetPath);
+            bool longClip = file.StartsWith("amb_") || file.StartsWith("mus_");
+            ai.forceToMono = true;
+            ai.loadInBackground = longClip;
+            var s = ai.defaultSampleSettings;
+            s.compressionFormat = AudioCompressionFormat.Vorbis;
+            s.quality = longClip ? 0.5f : 0.7f;
+            s.loadType = longClip ? AudioClipLoadType.CompressedInMemory : AudioClipLoadType.DecompressOnLoad;
+            ai.defaultSampleSettings = s;
+        }
+
         void OnPreprocessModel()
         {
             if (!assetPath.StartsWith(CatsPaths.Models)) return;

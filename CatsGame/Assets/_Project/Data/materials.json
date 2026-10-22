@@ -1362,6 +1362,412 @@
    },
    "cutoff": 0.0,
    "doubleSided": false
+  },
+  {
+   "name": "M_Glow",
+   "shader": "particlesAdditive",
+   "albedo": "T_Glow_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.62,
+    "b": 0.3,
+    "a": 0.55
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Firefly",
+   "shader": "particlesAdditive",
+   "albedo": "T_Glow_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.6,
+    "g": 2.0,
+    "b": 0.6,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Moth",
+   "shader": "particlesAdditive",
+   "albedo": "T_Moth_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.85,
+    "b": 0.65,
+    "a": 0.8
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Drop",
+   "shader": "particlesAdditive",
+   "albedo": "T_Drop_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.7,
+    "g": 0.75,
+    "b": 0.85,
+    "a": 0.6
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Ripple",
+   "shader": "particlesAdditive",
+   "albedo": "T_Ripple_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.6,
+    "g": 0.6,
+    "b": 0.65,
+    "a": 0.35
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Dust",
+   "shader": "particlesAdditive",
+   "albedo": "T_Glow_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.0,
+    "g": 0.85,
+    "b": 0.7,
+    "a": 0.25
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_LightCone",
+   "shader": "unlitAdditive",
+   "albedo": "T_LightCone_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.55,
+    "g": 0.33,
+    "b": 0.14,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": true
+  },
+  {
+   "name": "M_MoonHalo",
+   "shader": "unlitAdditive",
+   "albedo": "T_Glow_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 0.32,
+    "g": 0.38,
+    "b": 0.55,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_MoonPath",
+   "shader": "unlitAdditive",
+   "albedo": "T_MoonPath_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1.4,
+    "g": 1.45,
+    "b": 1.5,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Clouds",
+   "shader": "unlitTransparent",
+   "albedo": "T_Clouds_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 4,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Grime",
+   "shader": "unlitTransparent",
+   "albedo": "T_Grime_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 0.75
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Streaks",
+   "shader": "unlitTransparent",
+   "albedo": "T_Streaks_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 0.6
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_PawPrint",
+   "shader": "unlitTransparent",
+   "albedo": "T_PawPrint_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 0.55
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
+  },
+  {
+   "name": "M_Pigeon",
+   "shader": "lit",
+   "albedo": "T_Pigeon_A",
+   "normal": "",
+   "mask": "",
+   "emission": "",
+   "color": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1.0
+   },
+   "tiling": {
+    "x": 1,
+    "y": 1
+   },
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "normalScale": 1.0,
+   "emissionColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "cutoff": 0.0,
+   "doubleSided": false
   }
  ]
 }

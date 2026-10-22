@@ -88,8 +88,8 @@ def plaster(size=1024, seed=2):
     fine = value_noise(size, size, 256, 256, r)
     alb = colorize(big, [0.72, 0.68, 0.62], [0.92, 0.89, 0.83])
     stains = smoothstep(0.58, 0.8, fbm(size, size, 5, 6, r, aspect=0.4))
-    alb *= (1 - 0.14 * stains)[..., None]
-    patches = smoothstep(0.72, 0.75, fbm(size, size, 4, 6, r))
+    alb *= (1 - 0.08 * stains)[..., None]
+    patches = smoothstep(0.78, 0.8, fbm(size, size, 4, 6, r))
     alb = alb * (1 - patches[..., None]) + np.array([0.74, 0.7, 0.64]) * patches[..., None] * (0.85 + 0.2 * mid[..., None])
     alb *= (0.95 + 0.08 * fine)[..., None]
     hgt = 0.6 * mid + 0.25 * fine + 0.5 * patches
@@ -173,7 +173,7 @@ def roof_tiles(size=1024, seed=5):
     alb *= (1 - 0.6 * lip_shadow)[..., None]
     gap = (fu < 0.04) | (fu > 0.96)
     alb = np.where(gap[..., None], alb * 0.3, alb)
-    smooth = 0.42 + 0.15 * profile - 0.2 * moss
+    smooth = 0.2 + 0.1 * profile - 0.12 * moss
     save_rgb(p("T_RoofTiles_A.png"), alb)
     save_rgb(p("T_RoofTiles_N.png"), normal_from_height(hgt - 0.6 * lip_shadow, 10))
     save_mask(p("T_RoofTiles_M.png"), 0, 1 - 0.5 * lip_shadow - 0.4 * gap, smooth)
@@ -650,10 +650,112 @@ def ui(size=256):
     d.rounded_rectangle([0, 0, S - 1, S - 1], radius=S // 6, fill=255)
     finish(im, "UI_Panel.png")
 
+    # meow button: ring + cat face
+    im = Image.new("L", (S, S), 0)
+    d = ImageDraw.Draw(im)
+    d.ellipse([8, 8, S - 8, S - 8], fill=40, outline=200, width=22)
+    c = S / 2
+    d.ellipse([c - 0.26 * S, c - 0.2 * S, c + 0.26 * S, c + 0.24 * S], fill=230)
+    d.polygon([(c - 0.25 * S, c - 0.05 * S), (c - 0.22 * S, c - 0.33 * S), (c - 0.06 * S, c - 0.18 * S)], fill=230)
+    d.polygon([(c + 0.25 * S, c - 0.05 * S), (c + 0.22 * S, c - 0.33 * S), (c + 0.06 * S, c - 0.18 * S)], fill=230)
+    for ex in (-0.1, 0.1):
+        d.ellipse([c + (ex - 0.035) * S, c - 0.02 * S, c + (ex + 0.035) * S, c + 0.06 * S], fill=40)
+    d.polygon([(c - 0.025 * S, c + 0.09 * S), (c + 0.025 * S, c + 0.09 * S), (c, c + 0.12 * S)], fill=40)
+    finish(im, "UI_MeowButton.png")
+
+
+# ---------------------------------------------------------------- atmosphere / VFX
+def vfx(size=256, seed=19):
+    r = rng(seed)
+    ys, xs = np.mgrid[0:size, 0:size] / size * 2 - 1
+    d = np.sqrt(xs ** 2 + ys ** 2)
+    white = np.ones((size, size, 3))
+    # soft glow (lantern halos, fireflies, moon halo)
+    glow = np.clip(np.exp(-(d / 0.35) ** 2) * 0.9 + np.exp(-(d / 0.8) ** 2) * 0.25, 0, 1) * smoothstep(1.0, 0.85, d)
+    save_rgba(p("T_Glow_A.png"), np.concatenate([white, glow[..., None]], axis=-1))
+    # light cone (U around, V top->bottom): bright near the lamp, fading down, soft sides
+    u = (xs + 1) / 2
+    v = (ys + 1) / 2
+    cone = (1 - v) ** 1.6 * np.sin(np.pi * u) ** 1.5 * (0.85 + 0.15 * fbm(size, size, 8, 3, r))
+    save_rgba(p("T_LightCone_A.png"), np.concatenate([white, cone[..., None]], axis=-1))
+    # wet paw print
+    S = size * 2
+    im = Image.new("L", (S, S), 0)
+    dr = ImageDraw.Draw(im)
+    c = S / 2
+    dr.ellipse([c - 0.2 * S, c, c + 0.2 * S, c + 0.3 * S], fill=200)
+    for ox, oy in ((-0.24, -0.08), (-0.09, -0.22), (0.09, -0.22), (0.24, -0.08)):
+        dr.ellipse([c + (ox - 0.07) * S, c + (oy - 0.09) * S, c + (ox + 0.07) * S, c + (oy + 0.09) * S], fill=200)
+    a = np.asarray(im.resize((size, size), Image.LANCZOS)) / 255.0 * (0.7 + 0.3 * fbm(size, size, 16, 3, r))
+    save_rgba(p("T_PawPrint_A.png"), np.concatenate([np.ones((size, size, 3)) * 0.05, a[..., None]], axis=-1))
+    # ripple ring
+    ring = smoothstep(0.62, 0.75, d) * smoothstep(0.95, 0.8, d)
+    save_rgba(p("T_Ripple_A.png"), np.concatenate([white, ring[..., None]], axis=-1))
+    # moth: two soft wing blobs
+    m = np.exp(-(((np.abs(xs) - 0.35) / 0.3) ** 2 + (ys / 0.45) ** 2)) + np.exp(-((xs / 0.08) ** 2 + (ys / 0.4) ** 2))
+    save_rgba(p("T_Moth_A.png"), np.concatenate([white, np.clip(m, 0, 1)[..., None]], axis=-1))
+    # rain drop streak
+    streak = np.exp(-(xs / 0.12) ** 2) * smoothstep(1.0, 0.2, np.abs(ys))
+    save_rgba(p("T_Drop_A.png"), np.concatenate([white, streak[..., None]], axis=-1))
+
+
+def grime(w=512, h=512, seed=20):
+    """Dark streaks / dirt for wall bases and under sills (alpha). V = 1 at the top edge."""
+    r = rng(seed)
+    ys, xs = np.mgrid[0:h, 0:w]
+    v = 1 - ys / h
+    streaks = fbm(w, h, 24, 5, r, aspect=0.08)
+    base = smoothstep(0.55, 0.0, v) * (0.55 + 0.45 * fbm(w, h, 6, 5, r))
+    drip = smoothstep(0.45, 0.75, streaks) * smoothstep(0.0, 0.9, v) * 0.6
+    a = np.clip(base + drip * (0.5 + 0.5 * fbm(w, h, 3, 4, r)), 0, 0.85)
+    col = np.ones((h, w, 3)) * np.array([0.12, 0.1, 0.08])
+    save_rgba(p("T_Grime_A.png"), np.concatenate([col, a[..., None]], axis=-1))
+    # streaks hanging down from sills / cornices (alpha strongest at the top)
+    a2 = np.clip(smoothstep(0.35, 0.75, streaks) * v ** 1.5 * 0.8 + smoothstep(0.85, 1.0, v) * 0.5, 0, 0.8)
+    save_rgba(p("T_Streaks_A.png"), np.concatenate([col, a2[..., None]], axis=-1))
+
+
+def clouds(w=2048, h=512, seed=21):
+    r = rng(seed)
+    n = fbm(w, h, 5, 7, r, aspect=0.6)
+    a = smoothstep(0.5, 0.75, n) * 0.85
+    ys = np.arange(h)[:, None] / h
+    a *= smoothstep(0.0, 0.25, ys) * smoothstep(1.0, 0.7, ys)
+    lit = smoothstep(0.55, 0.8, n)
+    col = np.array([0.18, 0.22, 0.32]) + np.array([0.45, 0.47, 0.52]) * lit[..., None]
+    save_rgba(p("T_Clouds_A.png"), np.concatenate([col, a[..., None]], axis=-1))
+
+
+def moon_glitter(w=256, h=1024, seed=22):
+    """Moon path on the sea: sparkles that get denser near the horizon (top of the texture)."""
+    r = rng(seed)
+    ys, xs = np.mgrid[0:h, 0:w]
+    u, v = xs / w, ys / h
+    sparkle = (r.random((h, w)) > 0.985).astype(float)
+    img = Image.fromarray((sparkle * 255).astype(np.uint8)).resize((w, h))
+    sp = np.asarray(img) / 255.0
+    sp = blur(sp, 1.2) * 4
+    width = 0.12 + 0.3 * v
+    band = np.exp(-((u - 0.5) / width) ** 2)
+    a = np.clip(sp * band * (0.3 + 0.7 * (1 - v)) + band * 0.12 * (1 - v), 0, 1)
+    save_rgba(p("T_MoonPath_A.png"), np.concatenate([np.ones((h, w, 3)), a[..., None]], axis=-1))
+
+
+def pigeon(w=256, h=128, seed=23):
+    r = rng(seed)
+    ys, xs = np.mgrid[0:h, 0:w]
+    u, v = xs / w, ys / h
+    belly = 0.5 - 0.5 * np.cos(2 * np.pi * u)
+    col = colorize(belly, [0.32, 0.34, 0.38], [0.6, 0.62, 0.66])
+    neck = smoothstep(0.15, 0.0, np.abs(v - 0.2)) * (1 - belly)
+    col = col * (1 - neck[..., None]) + np.array([0.25, 0.42, 0.35]) * neck[..., None]
+    col *= (0.9 + 0.2 * fbm(w, h, 32, 3, r, aspect=0.3))[..., None]
+    save_rgb(p("T_Pigeon_A.png"), col)
+
 
 ALL = [terrace_tiles, plaster, stone, cobbles, roof_tiles, painted_metal, awning, shutter,
        windows, terracotta, wood, sea_normal, laundry, facade_far, cat_bengal, foliage,
-       sky, far_matte, moon, paw, ui]
+       sky, far_matte, moon, paw, ui, vfx, grime, clouds, moon_glitter, pigeon]
 
 if __name__ == "__main__":
     only = set(sys.argv[2:])

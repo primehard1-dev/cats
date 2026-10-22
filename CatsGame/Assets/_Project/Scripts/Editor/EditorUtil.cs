@@ -31,6 +31,15 @@ namespace Cats.EditorTools
             return null;
         }
 
+        public static T[] FindAll<T>() where T : Object
+        {
+#if UNITY_2023_1_OR_NEWER
+            return Object.FindObjectsByType<T>(FindObjectsSortMode.None);
+#else
+            return Object.FindObjectsOfType<T>();
+#endif
+        }
+
         public static void SetLayerRecursive(GameObject go, int layer)
         {
             go.layer = layer;

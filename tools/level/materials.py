@@ -90,6 +90,21 @@ MATERIALS = [
     m("M_TowerLight", color=(1.0, 0.85, 0.6), emission_color=scaled(WARM, 4.0)),
     m("M_Wire", color=(0.03, 0.03, 0.03), smoothness=0.5),
     m("M_Sky", shader="skybox", albedo="T_SkyNight_A"),
+    # atmosphere / VFX
+    m("M_Glow", shader="particlesAdditive", albedo="T_Glow_A", color=(1.0, 0.62, 0.3), alpha=0.55),
+    m("M_Firefly", shader="particlesAdditive", albedo="T_Glow_A", color=(1.6, 2.0, 0.6)),
+    m("M_Moth", shader="particlesAdditive", albedo="T_Moth_A", color=(1.0, 0.85, 0.65), alpha=0.8),
+    m("M_Drop", shader="particlesAdditive", albedo="T_Drop_A", color=(0.7, 0.75, 0.85), alpha=0.6),
+    m("M_Ripple", shader="particlesAdditive", albedo="T_Ripple_A", color=(0.6, 0.6, 0.65), alpha=0.35),
+    m("M_Dust", shader="particlesAdditive", albedo="T_Glow_A", color=(1.0, 0.85, 0.7), alpha=0.25),
+    m("M_LightCone", shader="unlitAdditive", albedo="T_LightCone_A", color=(0.55, 0.33, 0.14), double_sided=True),
+    m("M_MoonHalo", shader="unlitAdditive", albedo="T_Glow_A", color=(0.32, 0.38, 0.55)),
+    m("M_MoonPath", shader="unlitAdditive", albedo="T_MoonPath_A", color=(1.4, 1.45, 1.5)),
+    m("M_Clouds", shader="unlitTransparent", albedo="T_Clouds_A", color=(1, 1, 1), tiling=(4, 1)),
+    m("M_Grime", shader="unlitTransparent", albedo="T_Grime_A", color=(1, 1, 1), alpha=0.75),
+    m("M_Streaks", shader="unlitTransparent", albedo="T_Streaks_A", color=(1, 1, 1), alpha=0.6),
+    m("M_PawPrint", shader="unlitTransparent", albedo="T_PawPrint_A", color=(1, 1, 1), alpha=0.55),
+    m("M_Pigeon", albedo="T_Pigeon_A", smoothness=0.25),
 ]
 
 if __name__ == "__main__":

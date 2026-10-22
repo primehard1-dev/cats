@@ -10,6 +10,7 @@ namespace Cats
         public Vector2 moveRaw;     // stick as the player pushes it (x = right, y = forward)
         public bool jumpDown;
         public bool jumpHeld;
+        public bool meowDown;
     }
 
     /// <summary>Anything that can drive a cat: local touch/keyboard, AI, or a remote player.</summary>

@@ -20,8 +20,15 @@ namespace Cats
         readonly Quaternion[] _legRest = new Quaternion[4];
         Quaternion[] _tailRest;
         Vector3 _bodyPos;
-        float _phase, _land, _lean;
+        float _phase, _land, _lean, _sit, _meow, _nextGlance;
         Transform _lookTarget;
+        Vector3 _glance;
+
+        public bool IsSitting => _sit > 0.9f;
+        public float SitTime { get; private set; }
+        public float sitAfter = 4f;
+
+        public void PlayMeow() => _meow = 1f;
 
         static readonly string[] LegNames = { "Leg_FL", "Leg_FR", "Leg_BL", "Leg_BR" };
         static readonly float[] LegPhase = { 0f, Mathf.PI, Mathf.PI, 0f };
@@ -74,6 +81,11 @@ namespace Cats
             bool hang = state == CatController.State.Hang || state == CatController.State.Climb;
             bool rope = state == CatController.State.Rope;
 
+            bool sitting = controller.IdleTime > sitAfter && state == CatController.State.Normal && controller.IsGrounded;
+            _sit = Mathf.MoveTowards(_sit, sitting ? 1f : 0f, dt * (sitting ? 1.5f : 5f));
+            SitTime = IsSitting ? SitTime + dt : 0f;
+            _meow = Mathf.MoveTowards(_meow, 0f, dt * 1.6f);
+
             _phase += dt * stepFrequency * Mathf.Lerp(0.6f, 1.6f, speed) * (speed > 0.02f || rope ? 1f : 0f);
             _land = Mathf.MoveTowards(_land, 0f, dt * 4f);
             float amp = legSwing * Mathf.Clamp01(speed * 2.5f);
@@ -86,6 +98,8 @@ namespace Cats
                 if (air) a = i < 2 ? -40f : 40f;
                 else if (hang) a = i < 2 ? -70f : 15f;
                 else a = Mathf.Sin(_phase + LegPhase[i]) * amp;
+                // sitting: hind legs fold under the body, front legs straight
+                a = Mathf.Lerp(a, i < 2 ? -18f : 75f, _sit);
                 _legs[i].localRotation = Quaternion.Slerp(_legs[i].localRotation, _legRest[i] * Quaternion.Euler(a, 0f, 0f), 1f - Mathf.Exp(-dt * 20f));
             }
 
@@ -93,6 +107,10 @@ namespace Cats
             _body.localPosition = _bodyPos + Vector3.up * (bob - _land * 0.03f);
             _lean = Mathf.Lerp(_lean, rope ? controller.Balance * 30f : 0f, 1f - Mathf.Exp(-dt * 10f));
             float pitch = hang ? -45f : air ? (controller.Velocity.y > 0 ? -12f : 10f) : 0f;
+            pitch = Mathf.Lerp(pitch, -28f, _sit);
+            float breathe = Mathf.Sin(Time.time * 2.4f) * 0.012f;
+            _body.localPosition += Vector3.down * (0.06f * _sit);
+            _body.localScale = new Vector3(1f + breathe * 0.5f, 1f + breathe, 1f);
             _body.localRotation = Quaternion.Slerp(_body.localRotation, _bodyRest * Quaternion.Euler(pitch, 0f, _lean), 1f - Mathf.Exp(-dt * 12f));
 
             if (_head != null)
@@ -104,6 +122,17 @@ namespace Cats
                     float yaw = Mathf.Clamp(Mathf.Atan2(local.x, local.z) * Mathf.Rad2Deg, -60f, 60f);
                     headRot = _headRest * Quaternion.Euler(0f, yaw, 0f);
                 }
+                else if (controller.IdleTime > 1.5f)
+                {
+                    // idle: glance around at the lights, the sea, the moon
+                    if (Time.time > _nextGlance)
+                    {
+                        _glance = new Vector3(Random.Range(-15f, 25f), Random.Range(-70f, 70f), 0f);
+                        _nextGlance = Time.time + Random.Range(1.5f, 4f);
+                    }
+                    headRot = _headRest * Quaternion.Euler(_glance.x * (1f - _sit * 0.5f) + 20f * _sit, _glance.y, 0f);
+                }
+                headRot *= Quaternion.Euler(-25f * Mathf.Sin(_meow * Mathf.PI), 0f, 0f);
                 _head.localRotation = Quaternion.Slerp(_head.localRotation, headRot, 1f - Mathf.Exp(-dt * 6f));
             }
 
@@ -113,6 +142,8 @@ namespace Cats
                 float k = (i + 1f) / _tail.Length;
                 float sway = Mathf.Sin(t * 1.6f - i * 0.6f) * (6f + 10f * k) * (rope ? 2.2f : 1f);
                 float lift = air ? -8f : speed * -6f;
+                lift = Mathf.Lerp(lift, 22f, _sit);
+                sway *= Mathf.Lerp(1f, 0.4f, _sit);
                 if (rope) sway += -controller.Balance * 25f * k;
                 _tail[i].localRotation = _tailRest[i] * Quaternion.Euler(lift, sway, 0f);
             }

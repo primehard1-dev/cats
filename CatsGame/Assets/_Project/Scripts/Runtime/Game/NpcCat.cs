@@ -4,8 +4,32 @@ namespace Cats
 {
     /// <summary>Baron, the grey cat on the neighbour's balcony: looks at the player and tells the goal.</summary>
     [RequireComponent(typeof(SphereCollider))]
-    public class NpcCat : MonoBehaviour
+    public class NpcCat : MonoBehaviour, IMeowListener
     {
+        public AudioClip meow;
+        [TextArea]
+        public string[] meowReplies =
+        {
+            "Мрр? И тебе доброй ночи.",
+            "Не кричи, синьора Роза проснётся.",
+            "Мяу-мяу. Беги уже, рыба ждёт!",
+        };
+        AudioSource _audio;
+        int _reply;
+        float _lastReply = -10f;
+
+        public Vector3 Position => transform.position;
+
+        public void OnMeow(CatController cat, float distance)
+        {
+            if (Time.time - _lastReply < 3f) return;
+            _lastReply = Time.time;
+            if (meow != null && _audio != null) _audio.PlayOneShot(meow, 0.9f);
+            if (distance < 6f && meowReplies.Length > 0)
+                GameManager.Instance?.Say(displayName, meowReplies[_reply++ % meowReplies.Length], 3f);
+        }
+
+        void OnDestroy() => MeowListeners.Remove(this);
         public string displayName = "Барон";
         [TextArea]
         public string[] lines =
@@ -26,7 +50,12 @@ namespace Cats
 
         void Start()
         {
-            if (head == null) head = FindDeep(transform, "Head");
+            MeowListeners.Add(this);
+            _audio = gameObject.AddComponent<AudioSource>();
+            _audio.spatialBlend = 1f;
+            _audio.minDistance = 1.5f;
+            _audio.maxDistance = 25f;
+            if (head == null) head = FindDeep(transform.parent != null ? transform.parent : transform, "Head");
             if (head != null) _headRest = head.localRotation;
         }
 
