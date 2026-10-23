@@ -69,8 +69,8 @@ python3 tools/audio/gen_audio.py                # звуки (numpy)
 python  tools/menu/make_menu_video.py           # фон меню: оживлённый референс, menu_loop.mp4 (нужен ffmpeg)
 pip install bpy==5.2.2                          # Blender как Python-модуль (Python 3.13)
 python  tools/blender/make_models.py            # FBX-модели
-python  tools/blender/import_cat.py cat.glb     # кот: GLB -> CatHero.fbx со скелетом
-python  tools/blender/bengal_texture.py cat.glb # бенгальская шерсть (после import_cat)
+python  tools/blender/make_cat.py              # кот из округлых частей: CatHero.fbx со скелетом и окрасом
+python  tools/blender/make_cat.py out --render previews   # то же + рендеры для проверки
 python  tools/blender/render_level.py out.png   # предварительный рендер стартового кадра в Cycles
 ```
 
@@ -79,14 +79,12 @@ python  tools/blender/render_level.py out.png   # предварительный
 
 ## Важно знать
 
-- **Кот:** «Cat 3D Model (FREE)», автор Empire, [Sketchfab](https://sketchfab.com/3d-models/cat-3d-model-free-0db8c53b5b3d474b8a7c90e2350994f6),
-  лицензия **CC BY 4.0** (коммерческое использование разрешено, автор указан в «Об игре»).
-  `tools/blender/import_cat.py` уменьшает её до 14 тыс. треугольников, ставит скелет
-  (Body, Neck, Head, Leg_FL/FR/BL/BR, Tail1–5), привязывает шерсть и экспортирует `CatHero.fbx`.
-  `tools/blender/bengal_texture.py` перекрашивает шерсть в бенгальскую (розетки в 3D по телу, мех оригинала
-  сохраняется); исходная рыжая шерсть лежит как `T_CatHero_Ginger_A.png` — вторая «шкурка» для кооператива.
-  `CatAnimator` двигает эти кости кодом; позже можно добавить обычные анимации через Animator.
-  Если `CatHero.fbx` нет, используется старая заготовка `Cat_Hero`.
+- **Кот** собран кодом в Blender (`tools/blender/make_cat.py`) из округлых частей: туловище, грудь, бёдра,
+  большая голова со щёчками и мордочкой, уши, лапы, хвост. Части сливаются в одну гладкую форму (voxel remesh),
+  глаза — отдельные сферы со зрачком-щёлкой. Окрас рисуется по 3D-поверхности: бенгальские розетки, кремовое
+  брюшко, полосатый хвост; вторая «шкурка» для кооператива — рыжая (`T_CatHero_Ginger_A.png`).
+  Скелет: Body, Neck, Head, Leg_FL/FR/BL/BR, Tail1–5 — `CatAnimator` двигает эти кости кодом.
+  ~9 тыс. треугольников. Превью: `docs/level-01/cat_hero.jpg`.
 - Окна, фонари, гирлянды светятся за счёт emission и запечённого света. Без шага
   **Cats ▸ 4. Bake lighting** сцена будет заметно темнее и площе.
 - Low/High качество выбирается автоматически (`QualityTier`): флагманы получают 60 FPS, MSAA,
