@@ -13681,7 +13681,9 @@
 "distance":3.2,
 "height":1.6,
 "pitch":26.0,
-"side":-0.8
+"side":-0.8,
+"fixYaw":true,
+"yaw":35.5
 }
 ],
 "ropes":[

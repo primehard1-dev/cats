@@ -53,7 +53,8 @@ namespace Cats.EditorTools
     [Serializable] public class CameraZoneData
     {
         public Vector3 pos, size;
-        public float distance, height, pitch, side;
+        public float distance, height, pitch, side, yaw;
+        public bool fixYaw;
     }
 
     [Serializable] public class RopeData { public Vector3[] points; public float sag, width; }

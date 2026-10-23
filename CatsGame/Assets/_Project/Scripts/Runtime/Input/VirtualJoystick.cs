@@ -7,7 +7,7 @@ namespace Cats
     public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
         public RectTransform knob;
-        public float radius = 110f;
+        public float radius = 140f;
 
         public Vector2 Value { get; private set; }
         RectTransform _rect;

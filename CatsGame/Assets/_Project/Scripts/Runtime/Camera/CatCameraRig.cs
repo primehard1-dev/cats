@@ -7,6 +7,8 @@ namespace Cats
     /// Third-person camera that frames the cat like the reference shot: behind and above,
     /// the cat in the lower third, the street and the sea in the middle of the frame.
     /// One rig per local player (each phone renders its own view in co-op).
+    /// The camera does not chase the cat's heading: it keeps a fixed direction (along the street, or the one a
+    /// camera zone sets), so "stick up" always means the same way. A swipe looks around and springs back.
     /// </summary>
     [RequireComponent(typeof(Camera))]
     public class CatCameraRig : MonoBehaviour
@@ -24,11 +26,13 @@ namespace Cats
         public float pivotHeight = 0.35f;
 
         [Header("Control")]
-        public float lookSensitivity = 0.15f;
+        [Tooltip("Direction the camera looks outside camera zones (degrees around Y): along the street")]
+        public float fixedYaw;
+        public float lookSensitivity = 0.08f;
         public float minPitch = 5f;
         public float maxPitch = 65f;
-        public float recenterDelay = 1.6f;
-        public float recenterSpeed = 60f;
+        public float recenterDelay = 1.2f;
+        public float recenterSpeed = 70f;
         public float damping = 10f;
         public float collisionRadius = 0.15f;
 
@@ -54,7 +58,7 @@ namespace Cats
             _view = viewPitch;
             if (target != null)
             {
-                _yaw = target.eulerAngles.y;
+                _yaw = fixedYaw;
                 _pivot = target.position + Vector3.up * pivotHeight;
                 Snap();
             }
@@ -77,9 +81,16 @@ namespace Cats
         public void Snap()
         {
             if (target == null) return;
-            _yaw = target.eulerAngles.y;
+            _yaw = WantedYaw();
             _pivot = target.position + Vector3.up * pivotHeight;
             Apply(1f);
+        }
+
+        float WantedYaw()
+        {
+            for (int i = _zones.Count - 1; i >= 0; i--)
+                if (_zones[i].fixYaw) return _zones[i].yaw;
+            return fixedYaw;
         }
 
         void LateUpdate()
@@ -102,9 +113,7 @@ namespace Cats
             if (Time.time - _lastLook > recenterDelay)
             {
                 _pitch = Mathf.MoveTowards(_pitch, wantOrbit, 20f * dt);
-                var cat = target.GetComponent<CatController>();
-                if (cat != null && cat.Speed01 > 0.15f)
-                    _yaw = Mathf.MoveTowardsAngle(_yaw, target.eulerAngles.y, recenterSpeed * cat.Speed01 * dt);
+                _yaw = Mathf.MoveTowardsAngle(_yaw, WantedYaw(), recenterSpeed * dt);
             }
             _pivot = Vector3.Lerp(_pivot, target.position + Vector3.up * pivotHeight, 1f - Mathf.Exp(-dt * damping));
             Apply(1f - Mathf.Exp(-dt * damping));

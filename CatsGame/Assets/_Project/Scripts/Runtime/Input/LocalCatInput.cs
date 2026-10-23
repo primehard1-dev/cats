@@ -13,7 +13,16 @@ namespace Cats
         public JumpButton meowButton;
         public LookArea lookArea;
         public CatCameraRig cameraRig;
-        public float stickLookSpeed = 900f;
+        public float stickLookSpeed = 600f;
+        [Tooltip("Stick values below this are ignored")]
+        public float deadZone = 0.18f;
+        [Tooltip(">1 gives finer control near the centre of the stick")]
+        public float responseCurve = 1.6f;
+        [Tooltip("How fast (deg/s) the 'forward' of the stick follows a turning camera while the stick is held")]
+        public float basisFollow = 25f;
+
+        float _basisYaw;
+        bool _basisInit;
 
         void Update()
         {
@@ -28,15 +37,19 @@ namespace Cats
             var stick = joystick != null ? joystick.Value : Vector2.zero;
             var dev = DeviceMove();
             if (dev.sqrMagnitude > stick.sqrMagnitude) stick = dev;
-            stick = Vector2.ClampMagnitude(stick, 1f);
+            stick = Shape(Vector2.ClampMagnitude(stick, 1f));
 
             var frame = new CatInputFrame { moveRaw = stick };
             var cam = cameraRig != null ? cameraRig.transform : null;
             if (cam != null)
             {
-                var f = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
-                var r = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
-                frame.moveWorld = f * stick.y + r * stick.x;
+                // the stick's "forward" is locked while the finger is down, so a camera turn never bends the path
+                float camYaw = cam.eulerAngles.y;
+                if (!_basisInit || stick.sqrMagnitude < 0.0001f) _basisYaw = camYaw;
+                else _basisYaw = Mathf.MoveTowardsAngle(_basisYaw, camYaw, basisFollow * Time.deltaTime);
+                _basisInit = true;
+                var basis = Quaternion.Euler(0f, _basisYaw, 0f);
+                frame.moveWorld = basis * new Vector3(stick.x, 0f, stick.y);
             }
             else
             {
@@ -47,6 +60,15 @@ namespace Cats
             frame.jumpHeld = (jumpButton != null && jumpButton.Held) || DeviceJumpHeld();
             frame.meowDown = (meowButton != null && meowButton.ConsumePress()) || DeviceMeowDown();
             return frame;
+        }
+
+        /// <summary>Dead zone + response curve: small thumb movements give a slow, precise walk.</summary>
+        Vector2 Shape(Vector2 v)
+        {
+            float m = v.magnitude;
+            if (m <= deadZone) return Vector2.zero;
+            float k = Mathf.Pow((m - deadZone) / (1f - deadZone), responseCurve);
+            return v / m * k;
         }
 
 #if ENABLE_INPUT_SYSTEM

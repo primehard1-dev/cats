@@ -19,12 +19,12 @@ namespace Cats
         public LayerMask environmentMask = ~0;
 
         [Header("Movement")]
-        public float walkSpeed = 1.2f;
-        public float runSpeed = 3.5f;
+        public float walkSpeed = 1.0f;
+        public float runSpeed = 2.9f;
         public float ledgeSpeed = 0.8f;
-        public float acceleration = 12f;
+        public float acceleration = 8f;
         public float airControl = 0.35f;
-        public float turnSpeed = 720f;
+        public float turnSpeed = 420f;
 
         [Header("Jump")]
         public float jumpHeight = 1.0f;
@@ -51,7 +51,6 @@ namespace Cats
         public float slideMax = 1.4f;
         public float ropeSpeed = 0.9f;
         public float ropeDrift = 0.8f;
-        public float ropeCorrection = 2.4f;
         public float grabReach = 0.32f;
 
         public State CurrentState { get; private set; }
@@ -208,6 +207,7 @@ namespace Cats
             if (IsGrounded && _velocity.y < 0f) _velocity.y = -2f;
             else _velocity.y -= gravity * dt;
 
+            if (!IsGrounded && _velocity.y < 0f && TryCatchRope(pos)) return;
             if (!IsGrounded && _velocity.y < -0.5f && _grabCooldown <= 0f && TryGrab(pos)) return;
 
             _velocity = new Vector3(hv.x, _velocity.y, hv.z);
@@ -396,29 +396,51 @@ namespace Cats
             return false;
         }
 
+        /// <summary>A falling cat that passes the rope grabs it with its claws and stands on it.</summary>
+        bool TryCatchRope(Vector3 pos)
+        {
+            if (_ropes == null) return false;
+            foreach (var rope in _ropes)
+            {
+                for (int i = 1; i < 32; i++)
+                {
+                    float t = i / 32f;
+                    var p = rope.Evaluate(t);
+                    var d = pos - p;
+                    if (new Vector2(d.x, d.z).sqrMagnitude > 0.35f * 0.35f || d.y < -0.3f || d.y > 0.35f) continue;
+                    _rope = rope;
+                    _ropeT = t;
+                    _ropeSeed = Random.value * 100f;
+                    Balance = 0f;
+                    _cc.enabled = false;
+                    var tan = rope.Tangent(t);
+                    var flat = new Vector3(tan.x, 0f, tan.z).normalized;
+                    if (Vector3.Dot(flat, transform.forward) < 0f) flat = -flat;
+                    transform.SetPositionAndRotation(p, Quaternion.LookRotation(flat));
+                    SetState(State.Rope);
+                    Landed?.Invoke();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void UpdateRope(CatInputFrame frame, float dt)
         {
             var tan = _rope.Tangent(_ropeT);
             var flat = new Vector3(tan.x, 0f, tan.z).normalized;
-            var right = Vector3.Cross(Vector3.up, transform.forward);
+            // any push that is not backwards along the rope walks forward along it
             float along = Vector3.Dot(frame.moveWorld, flat);
-            float lateral = Vector3.Dot(frame.moveWorld, right);
+            float push = frame.moveWorld.magnitude;
+            if (push > 0.1f && Mathf.Abs(along) < push * 0.5f) along = push * Mathf.Sign(Vector3.Dot(transform.forward, flat) + 1e-3f);
 
             _ropeT += along * ropeSpeed / _rope.Length * dt;
             if (Mathf.Abs(along) > 0.1f)
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(flat * Mathf.Sign(along)), turnSpeed * dt);
 
+            // the cat holds on by itself: balance is only a gentle sway for the animation, it never falls off
             float noise = (Mathf.PerlinNoise(Time.time * 0.7f, _ropeSeed) - 0.5f) * 2f;
-            float drift = noise * ropeDrift * (0.4f + Mathf.Abs(along)) + Balance * 0.8f;
-            Balance = Mathf.Clamp(Balance + (drift + lateral * ropeCorrection) * dt, -1.2f, 1.2f);
-
-            if (Mathf.Abs(Balance) >= 1f)
-            {
-                var side = right * Mathf.Sign(Balance);
-                transform.position += side * 0.25f;
-                ExitRope(side * 1.5f + Vector3.down);
-                return;
-            }
+            Balance = Mathf.Lerp(Balance, noise * ropeDrift * 0.4f, 1f - Mathf.Exp(-dt * 3f));
             if (_ropeT >= 1f || _ropeT <= 0f)
             {
                 float t = Mathf.Clamp01(_ropeT);

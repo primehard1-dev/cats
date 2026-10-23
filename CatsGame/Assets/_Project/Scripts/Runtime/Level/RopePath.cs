@@ -10,8 +10,8 @@ namespace Cats
         public Vector3 b;
         public float sag = 0.5f;
         [Tooltip("How close (m) to an end the cat must be to step onto the rope.")]
-        public float enterRadius = 0.45f;
-        public string hint = "Держи равновесие: отклоняй стик влево-вправо";
+        public float enterRadius = 0.6f;
+        public string hint = "Гирлянда: просто веди стик вперёд — кот держится сам";
 
         public float Length => Vector3.Distance(a, b) * 1.03f;
 

@@ -467,6 +467,8 @@ namespace Cats.EditorTools
                 cz.height = z.height;
                 cz.pitch = z.pitch;
                 cz.side = z.side;
+                cz.fixYaw = z.fixYaw;
+                cz.yaw = z.yaw;
             }
             foreach (var z in L.ledgeZones) Trigger("LedgeZone", z.pos, z.size).AddComponent<LedgeZone>();
             Trigger("LevelExit", L.exit.pos, L.exit.size).AddComponent<LevelExit>();

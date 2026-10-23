@@ -10,6 +10,9 @@ namespace Cats
         public float height = 1.95f;
         public float pitch = 13f;
         public float side;
+        [Tooltip("Fix the camera direction in this zone (degrees around Y)")]
+        public bool fixYaw;
+        public float yaw;
 
         void OnTriggerEnter(Collider other)
         {

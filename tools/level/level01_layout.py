@@ -207,8 +207,10 @@ rope_b = (33.6, 5.28, 4.15)
 L["ropes"].append({"points": [V(*rope_a), V(*rope_b)], "sag": 0.55, "width": 0.08})
 L["garlands"].append({"a": V(*rope_a), "b": V(*rope_b), "sag": 0.55, "bulbSpacing": 0.45, "gameplay": True})
 L["markers"].append({"pos": V(rope_a[0] - 0.2, B2 + 0.01, rope_a[2] - 0.2)})
+# on the garland the camera looks along the cable, so "stick up" walks the cat along it
+rope_yaw = math.degrees(math.atan2(rope_b[2] - rope_a[2], rope_b[0] - rope_a[0]))
 L["cameraZones"].append({"pos": V(31.5, 5.6, 2.6), "size": S(5.5, 3.0, 4.5), "distance": 3.2, "height": 1.6, "pitch": 26.0,
-                         "side": -0.8})
+                         "side": -0.8, "fixYaw": True, "yaw": round(rope_yaw, 1)})
 # decorative garlands further down the street (like the reference)
 L["garlands"].append({"a": V(44.0, 8.6, 0.0), "b": V(52.0, 8.0, STREET_W), "sag": 0.9, "bulbSpacing": 0.6,
                       "gameplay": False})
